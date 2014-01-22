@@ -19,6 +19,13 @@
 		6F290600188F4EB100A119E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F2905E8188F4EB100A119E8 /* UIKit.framework */; };
 		6F290608188F4EB100A119E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6F290606188F4EB100A119E8 /* InfoPlist.strings */; };
 		6F29060A188F4EB100A119E8 /* PagedPhotoViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290609188F4EB100A119E8 /* PagedPhotoViewTests.m */; };
+		6F290615188F4F1C00A119E8 /* PagedPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290614188F4F1C00A119E8 /* PagedPhotoViewController.m */; };
+		6F290618188F4FEA00A119E8 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F290617188F4FEA00A119E8 /* Storyboard.storyboard */; };
+		6F29061B188F525A00A119E8 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F29061A188F525A00A119E8 /* ImageViewController.m */; };
+		6F29061E188F571600A119E8 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F29061D188F571600A119E8 /* ImageScrollView.m */; };
+		6F290623188F7B5000A119E8 /* PagedPhotoView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F290622188F7B5000A119E8 /* PagedPhotoView.xcassets */; };
+		6F290626188F88A700A119E8 /* WXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290625188F88A700A119E8 /* WXViewController.m */; };
+		6F290629188F892200A119E8 /* NSArray+WXKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290628188F892200A119E8 /* NSArray+WXKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +55,18 @@
 		6F290605188F4EB100A119E8 /* PagedPhotoViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PagedPhotoViewTests-Info.plist"; sourceTree = "<group>"; };
 		6F290607188F4EB100A119E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6F290609188F4EB100A119E8 /* PagedPhotoViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PagedPhotoViewTests.m; sourceTree = "<group>"; };
+		6F290613188F4F1C00A119E8 /* PagedPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PagedPhotoViewController.h; path = PagedPhotoView/PagedPhotoViewController.h; sourceTree = "<group>"; };
+		6F290614188F4F1C00A119E8 /* PagedPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PagedPhotoViewController.m; path = PagedPhotoView/PagedPhotoViewController.m; sourceTree = "<group>"; };
+		6F290617188F4FEA00A119E8 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		6F290619188F525A00A119E8 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageViewController.h; path = PagedPhotoView/ImageViewController.h; sourceTree = "<group>"; };
+		6F29061A188F525A00A119E8 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageViewController.m; path = PagedPhotoView/ImageViewController.m; sourceTree = "<group>"; };
+		6F29061C188F571600A119E8 /* ImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageScrollView.h; path = PagedPhotoView/ImageScrollView.h; sourceTree = "<group>"; };
+		6F29061D188F571600A119E8 /* ImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageScrollView.m; path = PagedPhotoView/ImageScrollView.m; sourceTree = "<group>"; };
+		6F290622188F7B5000A119E8 /* PagedPhotoView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = PagedPhotoView.xcassets; path = PagedPhotoView/PagedPhotoView.xcassets; sourceTree = "<group>"; };
+		6F290624188F88A700A119E8 /* WXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXViewController.h; sourceTree = "<group>"; };
+		6F290625188F88A700A119E8 /* WXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXViewController.m; sourceTree = "<group>"; };
+		6F290627188F892200A119E8 /* NSArray+WXKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WXKit.h"; sourceTree = "<group>"; };
+		6F290628188F892200A119E8 /* NSArray+WXKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WXKit.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +126,14 @@
 		6F2905EA188F4EB100A119E8 /* PagedPhotoView */ = {
 			isa = PBXGroup;
 			children = (
+				6F290627188F892200A119E8 /* NSArray+WXKit.h */,
+				6F290628188F892200A119E8 /* NSArray+WXKit.m */,
+				6F290617188F4FEA00A119E8 /* Storyboard.storyboard */,
+				6F290616188F4F2300A119E8 /* PagedPhotoView */,
 				6F2905F3188F4EB100A119E8 /* AppDelegate.h */,
 				6F2905F4188F4EB100A119E8 /* AppDelegate.m */,
+				6F290624188F88A700A119E8 /* WXViewController.h */,
+				6F290625188F88A700A119E8 /* WXViewController.m */,
 				6F2905F6188F4EB100A119E8 /* Images.xcassets */,
 				6F2905EB188F4EB100A119E8 /* Supporting Files */,
 			);
@@ -142,6 +167,20 @@
 				6F290606188F4EB100A119E8 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6F290616188F4F2300A119E8 /* PagedPhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				6F290613188F4F1C00A119E8 /* PagedPhotoViewController.h */,
+				6F290614188F4F1C00A119E8 /* PagedPhotoViewController.m */,
+				6F290619188F525A00A119E8 /* ImageViewController.h */,
+				6F29061A188F525A00A119E8 /* ImageViewController.m */,
+				6F29061C188F571600A119E8 /* ImageScrollView.h */,
+				6F29061D188F571600A119E8 /* ImageScrollView.m */,
+				6F290622188F7B5000A119E8 /* PagedPhotoView.xcassets */,
+			);
+			name = PagedPhotoView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +260,8 @@
 			files = (
 				6F2905EF188F4EB100A119E8 /* InfoPlist.strings in Resources */,
 				6F2905F7188F4EB100A119E8 /* Images.xcassets in Resources */,
+				6F290623188F7B5000A119E8 /* PagedPhotoView.xcassets in Resources */,
+				6F290618188F4FEA00A119E8 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,8 +280,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F290615188F4F1C00A119E8 /* PagedPhotoViewController.m in Sources */,
 				6F2905F5188F4EB100A119E8 /* AppDelegate.m in Sources */,
+				6F29061B188F525A00A119E8 /* ImageViewController.m in Sources */,
 				6F2905F1188F4EB100A119E8 /* main.m in Sources */,
+				6F29061E188F571600A119E8 /* ImageScrollView.m in Sources */,
+				6F290626188F88A700A119E8 /* WXViewController.m in Sources */,
+				6F290629188F892200A119E8 /* NSArray+WXKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +411,7 @@
 				GCC_PREFIX_HEADER = "PagedPhotoView/PagedPhotoView-Prefix.pch";
 				INFOPLIST_FILE = "PagedPhotoView/PagedPhotoView-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -378,6 +425,7 @@
 				GCC_PREFIX_HEADER = "PagedPhotoView/PagedPhotoView-Prefix.pch";
 				INFOPLIST_FILE = "PagedPhotoView/PagedPhotoView-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXPhotoProtocol.h"
 
 @protocol PagedPhotoViewControllerProtocol <NSObject>
 
-- (UIImage *)photoAtIndex:(NSUInteger)pageIndex;
+- (id<WXPhotoProtocol>)photoAtIndex:(NSUInteger)pageIndex;
 - (NSUInteger)numberOfPhoto;
 
 @end
@@ -18,6 +19,8 @@
 @interface PagedPhotoViewController : UIViewController
 @property (weak, nonatomic) id<PagedPhotoViewControllerProtocol> delegate;
 @property (nonatomic) NSInteger pageIndex;
+@property (strong, nonatomic) NSCache *photoCache;
+@property (strong, nonatomic) UIImage *photoPlaceholder;
 
 - (void)initalize;
 @end

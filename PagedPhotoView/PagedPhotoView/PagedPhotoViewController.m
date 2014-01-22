@@ -8,12 +8,28 @@
 
 #import "PagedPhotoViewController.h"
 #import "ImageViewController.h"
+#import "WXPhotoProtocol.h"
 
 @interface PagedPhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @end
 
 @implementation PagedPhotoViewController
+
+- (NSCache *)photoCache
+{
+    if (!_photoCache) {
+        _photoCache = [[NSCache alloc] init];
+        [_photoCache setCountLimit:50];
+    }
+    return _photoCache;
+}
+
+- (void)setPhotoPlaceholder:(UIImage *)photoPlaceholder
+{
+    _photoPlaceholder = photoPlaceholder;
+    [ImageViewController setPlaceholderPhoto:photoPlaceholder];
+}
 
 - (void)initalize
 {
@@ -29,7 +45,7 @@
 
     self.title = self.viewTitle;
 
-    ImageViewController *pageZero = [ImageViewController imageViewControllerForImage:[self.delegate photoAtIndex:0] andIndex:0];
+    ImageViewController *pageZero = [ImageViewController imageViewControllerForImage:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
     pageZero.view.frame = self.view.frame;
     [self.pageViewController setViewControllers:@[pageZero] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self setupToolBar];
@@ -39,11 +55,11 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    UIImage *image = [self.delegate photoAtIndex:self.pageIndex - 1];
-    if (image){
+    id<WXPhotoProtocol> photo = [self.delegate photoAtIndex:self.pageIndex - 1];
+    if (photo){
         self.pageIndex --;
         self.title = self.viewTitle;
-        ImageViewController *controller = [ImageViewController imageViewControllerForImage:image andIndex:self.pageIndex];
+        ImageViewController *controller = [ImageViewController imageViewControllerForImage:photo andIndex:self.pageIndex];
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }
@@ -52,11 +68,11 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    UIImage *image = [self.delegate photoAtIndex:self.pageIndex + 1];
-    if (image){
+    id<WXPhotoProtocol> photo = [self.delegate photoAtIndex:self.pageIndex + 1];
+    if (photo){
         self.pageIndex ++;
         self.title = self.viewTitle;
-        ImageViewController *controller = [ImageViewController imageViewControllerForImage:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
+        ImageViewController *controller = [ImageViewController imageViewControllerForImage:photo andIndex:self.pageIndex];
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }
@@ -102,7 +118,7 @@
     [self setToolbarItems:@[leftFlexibleSpace, previousButton, fixedSpace, nextButton, rightFlexibleSpace] animated:YES];
 }
 
-// enable rotation
+#pragma mark - rotation
 
 - (BOOL)shouldAutorotate
 {

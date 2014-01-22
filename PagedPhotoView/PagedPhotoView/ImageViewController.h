@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXPhotoProtocol.h"
 
 @interface ImageViewController : UIViewController
 
-+ (id)imageViewControllerForImage:(UIImage *)image andIndex:(NSUInteger)index;
++ (id)imageViewControllerForImage:(id<WXPhotoProtocol>)photo andIndex:(NSUInteger)index;
+
++ (void)setPlaceholderPhoto:(UIImage *)image;
+
++ (void)setPhotoCache:(NSCache *)cache;
+@property (strong, nonatomic) UIImage *photoPlaceholder;
 
 - (NSUInteger)pageIndex;
+
 
 @end

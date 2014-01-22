@@ -31,6 +31,12 @@
     [ImageViewController setPlaceholderPhoto:photoPlaceholder];
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
 - (void)initalize
 {
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
@@ -41,7 +47,6 @@
     self.view.frame = self.pageViewController.view.frame;
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
-    self.view.backgroundColor = [UIColor whiteColor];
 
     self.title = self.viewTitle;
 
@@ -128,5 +133,10 @@
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAll;
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden
+{
+    return self.pageViewController.viewControllers[0];
 }
 @end

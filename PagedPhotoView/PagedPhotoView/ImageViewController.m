@@ -127,15 +127,23 @@ static NSCache *photoCache;
         if (self.navigationController.navigationBarHidden) {
             [self.navigationController setNavigationBarHidden:NO animated:YES];
             [self.navigationController setToolbarHidden:NO animated:YES];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
         } else {
             [self.navigationController setNavigationBarHidden:YES animated:YES];
             [self.navigationController setToolbarHidden:YES animated:YES];
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         }
     }
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return [(ImageScrollView *)self.view imageView];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return self.navigationController.navigationBarHidden;
 }
 @end

@@ -19,10 +19,10 @@
 		6F290600188F4EB100A119E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F2905E8188F4EB100A119E8 /* UIKit.framework */; };
 		6F290608188F4EB100A119E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6F290606188F4EB100A119E8 /* InfoPlist.strings */; };
 		6F29060A188F4EB100A119E8 /* PagedPhotoViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290609188F4EB100A119E8 /* PagedPhotoViewTests.m */; };
-		6F290615188F4F1C00A119E8 /* PagedPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290614188F4F1C00A119E8 /* PagedPhotoViewController.m */; };
+		6F290615188F4F1C00A119E8 /* WXPagedPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290614188F4F1C00A119E8 /* WXPagedPhotoViewController.m */; };
 		6F290618188F4FEA00A119E8 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F290617188F4FEA00A119E8 /* Storyboard.storyboard */; };
-		6F29061B188F525A00A119E8 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F29061A188F525A00A119E8 /* ImageViewController.m */; };
-		6F29061E188F571600A119E8 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F29061D188F571600A119E8 /* ImageScrollView.m */; };
+		6F29061B188F525A00A119E8 /* WXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F29061A188F525A00A119E8 /* WXImageViewController.m */; };
+		6F29061E188F571600A119E8 /* WXImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F29061D188F571600A119E8 /* WXImageScrollView.m */; };
 		6F290623188F7B5000A119E8 /* PagedPhotoView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F290622188F7B5000A119E8 /* PagedPhotoView.xcassets */; };
 		6F290626188F88A700A119E8 /* WXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290625188F88A700A119E8 /* WXViewController.m */; };
 		6F2FEEC6188F90AB00BAC155 /* WXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2FEEC5188F90AB00BAC155 /* WXPhoto.m */; };
@@ -83,13 +83,13 @@
 		6F290605188F4EB100A119E8 /* PagedPhotoViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PagedPhotoViewTests-Info.plist"; sourceTree = "<group>"; };
 		6F290607188F4EB100A119E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6F290609188F4EB100A119E8 /* PagedPhotoViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PagedPhotoViewTests.m; sourceTree = "<group>"; };
-		6F290613188F4F1C00A119E8 /* PagedPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PagedPhotoViewController.h; path = PagedPhotoView/PagedPhotoViewController.h; sourceTree = "<group>"; };
-		6F290614188F4F1C00A119E8 /* PagedPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PagedPhotoViewController.m; path = PagedPhotoView/PagedPhotoViewController.m; sourceTree = "<group>"; };
+		6F290613188F4F1C00A119E8 /* WXPagedPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXPagedPhotoViewController.h; path = PagedPhotoView/WXPagedPhotoViewController.h; sourceTree = "<group>"; };
+		6F290614188F4F1C00A119E8 /* WXPagedPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WXPagedPhotoViewController.m; path = PagedPhotoView/WXPagedPhotoViewController.m; sourceTree = "<group>"; };
 		6F290617188F4FEA00A119E8 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		6F290619188F525A00A119E8 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageViewController.h; path = PagedPhotoView/ImageViewController.h; sourceTree = "<group>"; };
-		6F29061A188F525A00A119E8 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageViewController.m; path = PagedPhotoView/ImageViewController.m; sourceTree = "<group>"; };
-		6F29061C188F571600A119E8 /* ImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageScrollView.h; path = PagedPhotoView/ImageScrollView.h; sourceTree = "<group>"; };
-		6F29061D188F571600A119E8 /* ImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageScrollView.m; path = PagedPhotoView/ImageScrollView.m; sourceTree = "<group>"; };
+		6F290619188F525A00A119E8 /* WXImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXImageViewController.h; path = PagedPhotoView/WXImageViewController.h; sourceTree = "<group>"; };
+		6F29061A188F525A00A119E8 /* WXImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WXImageViewController.m; path = PagedPhotoView/WXImageViewController.m; sourceTree = "<group>"; };
+		6F29061C188F571600A119E8 /* WXImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXImageScrollView.h; path = PagedPhotoView/WXImageScrollView.h; sourceTree = "<group>"; };
+		6F29061D188F571600A119E8 /* WXImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WXImageScrollView.m; path = PagedPhotoView/WXImageScrollView.m; sourceTree = "<group>"; };
 		6F290622188F7B5000A119E8 /* PagedPhotoView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = PagedPhotoView.xcassets; path = PagedPhotoView/PagedPhotoView.xcassets; sourceTree = "<group>"; };
 		6F290624188F88A700A119E8 /* WXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXViewController.h; sourceTree = "<group>"; };
 		6F290625188F88A700A119E8 /* WXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXViewController.m; sourceTree = "<group>"; };
@@ -217,8 +217,8 @@
 		6F2905EA188F4EB100A119E8 /* PagedPhotoView */ = {
 			isa = PBXGroup;
 			children = (
-				6F290617188F4FEA00A119E8 /* Storyboard.storyboard */,
 				6F290616188F4F2300A119E8 /* PagedPhotoView */,
+				6F290617188F4FEA00A119E8 /* Storyboard.storyboard */,
 				6F2905F3188F4EB100A119E8 /* AppDelegate.h */,
 				6F2905F4188F4EB100A119E8 /* AppDelegate.m */,
 				6F290624188F88A700A119E8 /* WXViewController.h */,
@@ -264,12 +264,12 @@
 				6F2FEF02188F933500BAC155 /* WXPhotoProtocol.h */,
 				6F2FEEC4188F90AB00BAC155 /* WXPhoto.h */,
 				6F2FEEC5188F90AB00BAC155 /* WXPhoto.m */,
-				6F290613188F4F1C00A119E8 /* PagedPhotoViewController.h */,
-				6F290614188F4F1C00A119E8 /* PagedPhotoViewController.m */,
-				6F290619188F525A00A119E8 /* ImageViewController.h */,
-				6F29061A188F525A00A119E8 /* ImageViewController.m */,
-				6F29061C188F571600A119E8 /* ImageScrollView.h */,
-				6F29061D188F571600A119E8 /* ImageScrollView.m */,
+				6F290613188F4F1C00A119E8 /* WXPagedPhotoViewController.h */,
+				6F290614188F4F1C00A119E8 /* WXPagedPhotoViewController.m */,
+				6F290619188F525A00A119E8 /* WXImageViewController.h */,
+				6F29061A188F525A00A119E8 /* WXImageViewController.m */,
+				6F29061C188F571600A119E8 /* WXImageScrollView.h */,
+				6F29061D188F571600A119E8 /* WXImageScrollView.m */,
 				6F290622188F7B5000A119E8 /* PagedPhotoView.xcassets */,
 			);
 			name = PagedPhotoView;
@@ -479,15 +479,15 @@
 				6F2FEEFE188F92C100BAC155 /* UIColor+WXKit.m in Sources */,
 				6F2FEF2B188F986D00BAC155 /* AFSecurityPolicy.m in Sources */,
 				6F2FEF35188F986D00BAC155 /* UIProgressView+AFNetworking.m in Sources */,
-				6F290615188F4F1C00A119E8 /* PagedPhotoViewController.m in Sources */,
+				6F290615188F4F1C00A119E8 /* WXPagedPhotoViewController.m in Sources */,
 				6F2FEF33188F986D00BAC155 /* UIButton+AFNetworking.m in Sources */,
 				6F2905F5188F4EB100A119E8 /* AppDelegate.m in Sources */,
-				6F29061B188F525A00A119E8 /* ImageViewController.m in Sources */,
+				6F29061B188F525A00A119E8 /* WXImageViewController.m in Sources */,
 				6F2FEF28188F986D00BAC155 /* AFHTTPRequestOperationManager.m in Sources */,
 				6F2FEEFB188F92C100BAC155 /* NSMutableArray+WXKit.m in Sources */,
 				6F2905F1188F4EB100A119E8 /* main.m in Sources */,
 				6F2FEF32188F986D00BAC155 /* UIAlertView+AFNetworking.m in Sources */,
-				6F29061E188F571600A119E8 /* ImageScrollView.m in Sources */,
+				6F29061E188F571600A119E8 /* WXImageScrollView.m in Sources */,
 				6F2FEEC6188F90AB00BAC155 /* WXPhoto.m in Sources */,
 				6F2FEEFA188F92C100BAC155 /* NSDate+WXKit.m in Sources */,
 				6F2FEEFD188F92C100BAC155 /* NSString+WXKit.m in Sources */,

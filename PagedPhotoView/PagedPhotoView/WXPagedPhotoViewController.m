@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Charlie Wu. All rights reserved.
 //
 
-#import "PagedPhotoViewController.h"
-#import "ImageViewController.h"
+#import "WXPagedPhotoViewController.h"
+#import "WXImageViewController.h"
 #import "WXPhotoProtocol.h"
 
-@interface PagedPhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface WXPagedPhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @end
 
-@implementation PagedPhotoViewController
+@implementation WXPagedPhotoViewController
 
 - (NSCache *)photoCache
 {
@@ -28,7 +28,7 @@
 - (void)setPhotoPlaceholder:(UIImage *)photoPlaceholder
 {
     _photoPlaceholder = photoPlaceholder;
-    [ImageViewController setPlaceholderPhoto:photoPlaceholder];
+    [WXImageViewController setPlaceholderPhoto:photoPlaceholder];
 }
 
 - (void)viewDidLoad
@@ -50,7 +50,7 @@
 
     self.title = self.viewTitle;
 
-    ImageViewController *pageZero = [ImageViewController imageViewControllerForImage:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
+    WXImageViewController *pageZero = [WXImageViewController imageViewControllerForPhoto:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
     pageZero.view.frame = self.view.frame;
     [self.pageViewController setViewControllers:@[pageZero] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self setupToolBar];
@@ -64,7 +64,7 @@
     if (photo){
         self.pageIndex --;
         self.title = self.viewTitle;
-        ImageViewController *controller = [ImageViewController imageViewControllerForImage:photo andIndex:self.pageIndex];
+        WXImageViewController *controller = [WXImageViewController imageViewControllerForPhoto:photo andIndex:self.pageIndex];
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }
@@ -77,7 +77,7 @@
     if (photo){
         self.pageIndex ++;
         self.title = self.viewTitle;
-        ImageViewController *controller = [ImageViewController imageViewControllerForImage:photo andIndex:self.pageIndex];
+        WXImageViewController *controller = [WXImageViewController imageViewControllerForPhoto:photo andIndex:self.pageIndex];
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }

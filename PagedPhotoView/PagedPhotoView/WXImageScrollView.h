@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImageScrollView : UIScrollView
-
+@interface WXImageScrollView : UIScrollView
 
 @property (strong, nonatomic, readonly) UIImageView *imageView;
 
 @property (strong, nonatomic) UIImage *image;
+
+- (id)imageView;
 
 @end

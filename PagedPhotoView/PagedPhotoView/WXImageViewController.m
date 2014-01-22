@@ -6,17 +6,17 @@
 //  Copyright (c) 2014 Charlie Wu. All rights reserved.
 //
 
-#import "ImageViewController.h"
-#import "ImageScrollView.h"
+#import "WXImageViewController.h"
+#import "WXImageScrollView.h"
 
-@interface ImageViewController () <UIScrollViewDelegate>
+@interface WXImageViewController () <UIScrollViewDelegate>
 @property (nonatomic, readonly) NSUInteger pageIndex;
 @property (strong, nonatomic) id<WXPhotoProtocol> photo;
 @property (strong, nonatomic) DACircularProgressView *progressView;
 @property NSOperation *operation;
 @end
 
-@implementation ImageViewController
+@implementation WXImageViewController
 
 @synthesize pageIndex = _pageIndex;
 
@@ -24,7 +24,9 @@ static UIImage *placeholder;
 
 static NSCache *photoCache;
 
-+ (id)imageViewControllerForImage:(id<WXPhotoProtocol>)photo andIndex:(NSUInteger)pageIndex;
+static UIImage *invalidPhoto;
+
++ (id)imageViewControllerForPhoto:(id<WXPhotoProtocol>)photo andIndex:(NSUInteger)pageIndex;
 {
     if (photo) {
         return [[self alloc] initWithImage:photo atIndex:pageIndex];
@@ -42,9 +44,14 @@ static NSCache *photoCache;
     photoCache = cache;
 }
 
-- (ImageScrollView *)imageScrollView
++ (void)setInvalidPhoto:(UIImage *)image
 {
-    return (ImageScrollView *)self.view;
+    invalidPhoto = image;
+}
+
+- (WXImageScrollView *)imageScrollView
+{
+    return (WXImageScrollView *)self.view;
 }
 
 - (id)initWithImage:(id<WXPhotoProtocol>)photo atIndex:(NSUInteger)pageIndex
@@ -52,7 +59,7 @@ static NSCache *photoCache;
     if ((self = [super initWithNibName:nil bundle:nil])) {
         self.photo = photo;
         _pageIndex = pageIndex;
-        ImageScrollView *scrollView = [[ImageScrollView alloc] initWithFrame:self.view.frame];
+        WXImageScrollView *scrollView = [[WXImageScrollView alloc] initWithFrame:self.view.frame];
         scrollView.delegate = self;
         scrollView.maximumZoomScale = 3;
         scrollView.minimumZoomScale = 1;
@@ -65,14 +72,27 @@ static NSCache *photoCache;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    __weak ImageScrollView *scrollView = self.imageScrollView;
-
     UIImage *image = self.photo.photo ? self.photo.photo : [photoCache objectForKey:self.photo.photoUrl];
     if (image) {
-        scrollView.image = image ? image: placeholder;
-        return;
+        self.imageScrollView.image = image ? image: placeholder;
+    } else {
+        [self loadNetworkPhoto];
     }
+}
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.operation cancel];
+}
+
+- (NSUInteger)pageIndex
+{
+    return self.pageIndex;
+}
+
+- (void)loadNetworkPhoto
+{
+    __weak WXImageScrollView *scrollView = self.imageScrollView;
     self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     self.progressView.roundedCorners = YES;
     self.progressView.center = self.view.center;
@@ -103,16 +123,6 @@ static NSCache *photoCache;
     [operation start];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [self.operation cancel];
-}
-
-- (NSUInteger)pageIndex
-{
-    return self.pageIndex;
-}
-
 - (void)setupGestures
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHander:)];
@@ -139,7 +149,7 @@ static NSCache *photoCache;
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return [(ImageScrollView *)self.view imageView];
+    return [(WXImageScrollView *)self.view imageView];
 }
 
 - (BOOL)prefersStatusBarHidden

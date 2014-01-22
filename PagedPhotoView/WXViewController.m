@@ -9,7 +9,7 @@
 #import "WXViewController.h"
 #import "WXPhoto.h"
 
-@interface WXViewController () <PagedPhotoViewControllerProtocol>
+@interface WXViewController () <WXPagedPhotoViewControllerProtocol>
 
 @property (strong, nonatomic) NSArray *images;
 

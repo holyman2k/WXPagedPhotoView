@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PagedPhotoViewController.h"
+#import "WXPagedPhotoViewController.h"
 
-@interface WXViewController : PagedPhotoViewController
+@interface WXViewController : WXPagedPhotoViewController
 
 @end

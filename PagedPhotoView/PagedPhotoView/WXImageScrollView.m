@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 Charlie Wu. All rights reserved.
 //
 
-#import "ImageScrollView.h"
+#import "WXImageScrollView.h"
 
-@interface ImageScrollView()
+@interface WXImageScrollView()
+
 @end
 
-@implementation ImageScrollView
+@implementation WXImageScrollView
 
 - (id)initWithFrame:(CGRect)frame
 {

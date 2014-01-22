@@ -10,8 +10,8 @@
 
 @protocol PagedPhotoViewControllerProtocol <NSObject>
 
-- (UIImage *)imageAtIndex:(NSUInteger)index;
-- (NSUInteger)imageCount;
+- (UIImage *)photoAtIndex:(NSUInteger)pageIndex;
+- (NSUInteger)numberOfPhoto;
 
 @end
 

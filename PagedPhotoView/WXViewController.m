@@ -34,12 +34,12 @@
     [self initalize];
 }
 
-- (UIImage *)imageAtIndex:(NSUInteger)index
+- (UIImage *)photoAtIndex:(NSUInteger)pageIndex
 {
-    return [self.images objectOrNilAtIndex:index];
+    return [self.images objectOrNilAtIndex:pageIndex];
 }
 
-- (NSUInteger)imageCount
+- (NSUInteger)numberOfPhoto
 {
     return self.images.count;
 }

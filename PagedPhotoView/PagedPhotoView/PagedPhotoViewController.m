@@ -29,7 +29,7 @@
 
     self.title = self.viewTitle;
 
-    ImageViewController *pageZero = [ImageViewController imageViewControllerForImage:[self.delegate imageAtIndex:0] andIndex:0];
+    ImageViewController *pageZero = [ImageViewController imageViewControllerForImage:[self.delegate photoAtIndex:0] andIndex:0];
     pageZero.view.frame = self.view.frame;
     [self.pageViewController setViewControllers:@[pageZero] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self setupToolBar];
@@ -39,7 +39,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    UIImage *image = [self.delegate imageAtIndex:self.pageIndex - 1];
+    UIImage *image = [self.delegate photoAtIndex:self.pageIndex - 1];
     if (image){
         self.pageIndex --;
         self.title = self.viewTitle;
@@ -52,11 +52,11 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    UIImage *image = [self.delegate imageAtIndex:self.pageIndex + 1];
+    UIImage *image = [self.delegate photoAtIndex:self.pageIndex + 1];
     if (image){
         self.pageIndex ++;
         self.title = self.viewTitle;
-        ImageViewController *controller = [ImageViewController imageViewControllerForImage:[self.delegate imageAtIndex:self.pageIndex] andIndex:self.pageIndex];
+        ImageViewController *controller = [ImageViewController imageViewControllerForImage:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }
@@ -67,7 +67,7 @@
 
 - (NSString *)viewTitle
 {
-    return [NSString stringWithFormat:@"%d of %d", self.pageIndex + 1, [self.delegate imageCount]];
+    return [NSString stringWithFormat:@"%d of %d", self.pageIndex + 1, [self.delegate numberOfPhoto]];
 }
 
 #pragma mark - setup toolbars

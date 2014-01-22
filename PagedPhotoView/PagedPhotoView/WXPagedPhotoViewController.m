@@ -88,7 +88,7 @@
 
 - (NSString *)viewTitle
 {
-    return [NSString stringWithFormat:@"%d of %d", self.pageIndex + 1, [self.delegate numberOfPhoto]];
+    return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.delegate numberOfPhoto]];
 }
 
 #pragma mark - setup toolbars

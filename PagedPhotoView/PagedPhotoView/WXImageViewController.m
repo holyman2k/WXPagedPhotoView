@@ -111,13 +111,14 @@ static UIImage *invalidPhoto;
         NSLog(@"load failed");
     }];
 
+    __weak DACircularProgressView *progressView = self.progressView;
     [operation setDownloadProgressBlock: ^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
         NSLog(@"download percent %f", percent);
         if (totalBytesRead == totalBytesExpectedToRead) {
-            [self.progressView removeFromSuperview];
+            [progressView removeFromSuperview];
         } else {
-            self.progressView.progress = percent;
+            progressView.progress = percent;
         }
     }];
     [operation start];

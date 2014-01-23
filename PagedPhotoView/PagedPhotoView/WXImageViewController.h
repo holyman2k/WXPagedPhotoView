@@ -23,5 +23,8 @@
 
 - (NSUInteger)pageIndex;
 
+- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
+
+- (BOOL)isChromeVisbile;
 
 @end

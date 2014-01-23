@@ -12,7 +12,8 @@
 @interface WXViewController () <WXPagedPhotoViewControllerProtocol>
 
 @property (strong, nonatomic) NSArray *images;
-
+@property (nonatomic) BOOL isPlaying;
+@property (strong, nonatomic) NSTimer *autoPlayTimer;
 @end
 
 @implementation WXViewController
@@ -39,7 +40,58 @@
     [super viewDidLoad];
     self.delegate = self;
     [self initalize];
+
+    NSMutableArray *toolbarItems = self.toolbarItems.mutableCopy;
+
+    UIBarButtonItem *playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(setAutoPlay:)];
+    UIBarButtonItem *fixWidthLeft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    UIBarButtonItem *fixWidthRight = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixWidthLeft.width = 20;
+    fixWidthRight.width = 20;
+
+    [toolbarItems removeObjectAtIndex:2];
+
+    [toolbarItems insertObject:fixWidthLeft atIndex:2];
+    [toolbarItems insertObject:playButton atIndex:2];
+    [toolbarItems insertObject:fixWidthRight atIndex:2];
+
+    self.toolbarItems = toolbarItems;
 }
+
+- (void)setAutoPlay:(UIBarButtonItem *)sender
+{
+    NSMutableArray *toolbarItems = self.toolbarItems.mutableCopy;
+    if (self.isPlaying) {
+        UIBarButtonItem *pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(setAutoPlay:)];
+        [toolbarItems removeObjectAtIndex:3];
+        [toolbarItems insertObject:pauseButton atIndex:3];
+        self.isPlaying = NO;
+        [self.autoPlayTimer invalidate];
+        self.autoPlayTimer = nil;
+    } else {
+        [self setChromeVisibility:NO animated:YES];
+        UIBarButtonItem *playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(setAutoPlay:)];
+        [toolbarItems removeObjectAtIndex:3];
+        [toolbarItems insertObject:playButton atIndex:3];
+        self.isPlaying = YES;
+        self.autoPlayTimer = [NSTimer timerWithTimeInterval:3 target:self selector:@selector(autoPlayNextPhoto) userInfo:nil repeats:YES];
+
+        [[NSRunLoop currentRunLoop] addTimer:self.autoPlayTimer forMode:NSRunLoopCommonModes];
+    }
+    self.toolbarItems = toolbarItems;
+}
+
+- (void)autoPlayNextPhoto
+{
+    if (self.pageIndex == self.images.count - 1) {
+        [self setAutoPlay:nil];
+        [self setChromeVisibility:YES animated:YES];
+    } else {
+        [self nextPhoto:self];
+    }
+}
+
+#pragma mark - WXPhotoViewController delegate
 
 - (id<WXPhotoProtocol>)photoAtIndex:(NSUInteger)pageIndex
 {

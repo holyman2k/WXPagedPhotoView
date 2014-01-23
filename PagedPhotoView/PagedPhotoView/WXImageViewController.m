@@ -135,17 +135,25 @@ static UIImage *invalidPhoto;
 - (void)tapGestureHander:(UITapGestureRecognizer *)gesture
 {
     if (gesture.state == UIGestureRecognizerStateEnded) {
-        if (self.navigationController.navigationBarHidden) {
-            [self.navigationController setNavigationBarHidden:NO animated:YES];
-            [self.navigationController setToolbarHidden:NO animated:YES];
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+        if (self.isChromeVisbile) {
+            [self setChromeVisibility:YES animated:YES];
         } else {
-            [self.navigationController setNavigationBarHidden:YES animated:YES];
-            [self.navigationController setToolbarHidden:YES animated:YES];
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+            [self setChromeVisibility:NO animated:YES];
         }
     }
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (BOOL)isChromeVisbile
+{
+    return self.navigationController.navigationBarHidden;
+}
+
+- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:!isVisible animated:animated];
+    [self.navigationController setToolbarHidden:!isVisible animated:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:!isVisible withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

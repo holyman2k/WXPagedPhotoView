@@ -23,4 +23,8 @@
 @property (strong, nonatomic) UIImage *photoPlaceholder;
 
 - (void)initalize;
+- (void)nextPhoto:(id)sender;
+- (void)previousPhoto:(id)sender;
+- (NSString *)viewTitle;
+- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
 @end

@@ -7,8 +7,8 @@
 //
 
 #import "WXPagedPhotoViewController.h"
-#import "WXImageViewController.h"
 #import "WXPhotoProtocol.h"
+#import "WXImageViewController.h"
 
 @interface WXPagedPhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
@@ -35,6 +35,12 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self setupToolBar];
+}
+
+- (WXImageViewController *)imageViewController
+{
+    return (WXImageViewController *)self.pageViewController.viewControllers[0];
 }
 
 - (void)initalize
@@ -47,13 +53,12 @@
     self.view.frame = self.pageViewController.view.frame;
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
-
     self.title = self.viewTitle;
 
     WXImageViewController *pageZero = [WXImageViewController imageViewControllerForPhoto:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
     pageZero.view.frame = self.view.frame;
     [self.pageViewController setViewControllers:@[pageZero] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    [self setupToolBar];
+
 }
 
 #pragma mark - UIPageViewController datasource
@@ -84,11 +89,14 @@
     return nil;
 }
 
-#pragma mark - setup toolbars
-
 - (NSString *)viewTitle
 {
     return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.delegate numberOfPhoto]];
+}
+
+- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
+{
+    [self.imageViewController setChromeVisibility:isVisible animated:animated];
 }
 
 #pragma mark - setup toolbars
@@ -137,6 +145,6 @@
 
 - (UIViewController *)childViewControllerForStatusBarHidden
 {
-    return self.pageViewController.viewControllers[0];
+    return self.imageViewController;
 }
 @end

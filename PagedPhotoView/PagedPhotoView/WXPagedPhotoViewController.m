@@ -54,7 +54,7 @@
     [self.view addSubview:self.pageViewController.view];
     self.title = self.viewTitle;
 
-    WXImageViewController *baseViewController = [WXImageViewController imageViewControllerForPhoto:[self.dataSource photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
+    WXImageViewController *baseViewController = [self viewControllerAtPageIndex:self.pageIndex];
     baseViewController.view.tintColor = self.view.tintColor;
     [self.pageViewController setViewControllers:@[baseViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
@@ -91,7 +91,9 @@
 {
     if (completed){
         self.pageIndex = [(WXImageViewController *)self.pageViewController.viewControllers.lastObject pageIndex];
+        id<WXPhotoProtocol> photo = [(WXImageViewController *)self.pageViewController.viewControllers.lastObject photo];
         self.title = self.viewTitle;
+        [self.delegate pagePhotoViewController:self didLoadPhoto:photo atPageIndex:self.pageIndex];
     }
 }
 
@@ -110,19 +112,28 @@
 - (void)nextPhoto:(id)sender
 {
     id view = [self pageViewController:self.pageViewController viewControllerAfterViewController:self.pageViewController.viewControllers[0]];
-    if (view) [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    if (view) {
+        id previousViewControllers = self.pageViewController.viewControllers;
+        [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:previousViewControllers transitionCompleted:YES];
+    }
 }
 
 - (void)previousPhoto:(id)sender
 {
     id view = [self pageViewController:self.pageViewController viewControllerBeforeViewController:self.pageViewController.viewControllers[0]];
-    if (view) [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    if (view) {
+        id previousViewControllers = self.pageViewController.viewControllers;
+        [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:previousViewControllers transitionCompleted:YES];
+    }
 }
 
 - (void)reloadPhoto
 {
     id view = [self viewControllerAtPageIndex:self.pageIndex];
     if (view) [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    self.title = self.viewTitle;
 }
 
 - (void)setupToolBar

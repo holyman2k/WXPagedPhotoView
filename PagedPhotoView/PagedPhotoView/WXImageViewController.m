@@ -11,7 +11,6 @@
 
 @interface WXImageViewController () <UIScrollViewDelegate>
 @property (nonatomic, readonly) NSUInteger pageIndex;
-@property (strong, nonatomic) id<WXPhotoProtocol> photo;
 @property (strong, nonatomic) DACircularProgressView *progressView;
 @property NSOperation *operation;
 @end
@@ -57,7 +56,7 @@ static UIImage *invalidPhoto;
 - (id)initWithImage:(id<WXPhotoProtocol>)photo atIndex:(NSUInteger)pageIndex
 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        self.photo = photo;
+        _photo = photo;
         _pageIndex = pageIndex;
         WXImageScrollView *scrollView = [[WXImageScrollView alloc] initWithFrame:self.view.frame];
         scrollView.delegate = self;
@@ -95,6 +94,7 @@ static UIImage *invalidPhoto;
 - (void)loadNetworkPhoto
 {
     __weak WXImageScrollView *scrollView = self.imageScrollView;
+    scrollView.image = placeholder;
     self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     self.progressView.roundedCorners = YES;
     self.progressView.center = self.view.center;
@@ -110,13 +110,12 @@ static UIImage *invalidPhoto;
         scrollView.image = image;
         [photoCache setObject:image forKey:self.photo.photoUrl];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"load failed");
+        scrollView.image = invalidPhoto;
     }];
 
     __weak DACircularProgressView *progressView = self.progressView;
     [operation setDownloadProgressBlock: ^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
-        NSLog(@"download percent %f", percent);
         if (totalBytesRead == totalBytesExpectedToRead) {
             [progressView removeFromSuperview];
         } else {

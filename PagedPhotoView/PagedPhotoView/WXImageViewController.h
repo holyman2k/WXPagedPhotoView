@@ -21,6 +21,8 @@
 
 @property (strong, nonatomic) UIImage *photoPlaceholder;
 
+@property (strong, nonatomic, readonly) id<WXPhotoProtocol> photo;
+
 - (NSUInteger)pageIndex;
 
 - (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;

@@ -116,6 +116,12 @@
 {
     UIImage *previousIcon = [UIImage imageNamed:@"arrowLeft"];
     UIImage *nextIcon = [UIImage imageNamed:@"arrowRight"];
+
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 7) {
+        previousIcon = [previousIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        nextIcon = [nextIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
+
     UIBarButtonItem *previousButton = [[UIBarButtonItem alloc] initWithImage:previousIcon
                                                                        style:UIBarButtonItemStylePlain target:self action:@selector(previousPhoto:)];
     UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithImage:nextIcon

@@ -34,7 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
     [self setupToolBar];
 }
 
@@ -55,7 +54,7 @@
     [self.view addSubview:self.pageViewController.view];
     self.title = self.viewTitle;
 
-    WXImageViewController *pageZero = [WXImageViewController imageViewControllerForPhoto:[self.delegate photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
+    WXImageViewController *pageZero = [WXImageViewController imageViewControllerForPhoto:[self.dataSource photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
     pageZero.view.frame = self.view.frame;
     [self.pageViewController setViewControllers:@[pageZero] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
@@ -65,7 +64,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    id<WXPhotoProtocol> photo = [self.delegate photoAtIndex:self.pageIndex - 1];
+    id<WXPhotoProtocol> photo = [self.dataSource photoAtIndex:self.pageIndex - 1];
     if (photo){
         self.pageIndex --;
         self.title = self.viewTitle;
@@ -78,7 +77,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    id<WXPhotoProtocol> photo = [self.delegate photoAtIndex:self.pageIndex + 1];
+    id<WXPhotoProtocol> photo = [self.dataSource photoAtIndex:self.pageIndex + 1];
     if (photo){
         self.pageIndex ++;
         self.title = self.viewTitle;
@@ -91,7 +90,7 @@
 
 - (NSString *)viewTitle
 {
-    return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.delegate numberOfPhoto]];
+    return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.dataSource numberOfPhoto]];
 }
 
 - (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated

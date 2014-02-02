@@ -17,7 +17,7 @@
 @end
 
 @interface WXPagedPhotoViewController : UIViewController
-@property (weak, nonatomic) id<WXPagedPhotoViewControllerProtocol> delegate;
+@property (weak, nonatomic) id<WXPagedPhotoViewControllerProtocol> dataSource;
 @property (nonatomic) NSInteger pageIndex;
 @property (strong, nonatomic) NSCache *photoCache;
 @property (strong, nonatomic) UIImage *photoPlaceholder;

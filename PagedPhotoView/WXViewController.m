@@ -38,7 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.delegate = self;
+    self.dataSource = self;
     [self initalize];
 
     NSMutableArray *toolbarItems = self.toolbarItems.mutableCopy;

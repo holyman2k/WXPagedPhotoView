@@ -1,0 +1,9 @@
+[submodule "WXKit"]
+	path = WXKit
+	url = git@github.com:holyman2k/WXKit.git
+[submodule "AFNetworking"]
+	path = AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "DACircularProgress"]
+	path = DACircularProgress
+	url = git@github.com:danielamitay/DACircularProgress.git

@@ -25,6 +25,7 @@
 - (void)initalize;
 - (void)nextPhoto:(id)sender;
 - (void)previousPhoto:(id)sender;
+- (void)reloadPhoto;
 - (NSString *)viewTitle;
 - (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
 @end

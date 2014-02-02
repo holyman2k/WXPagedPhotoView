@@ -54,9 +54,9 @@
     [self.view addSubview:self.pageViewController.view];
     self.title = self.viewTitle;
 
-    WXImageViewController *pageZero = [WXImageViewController imageViewControllerForPhoto:[self.dataSource photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
-    pageZero.view.frame = self.view.frame;
-    [self.pageViewController setViewControllers:@[pageZero] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    WXImageViewController *baseViewController = [WXImageViewController imageViewControllerForPhoto:[self.dataSource photoAtIndex:self.pageIndex] andIndex:self.pageIndex];
+    baseViewController.view.tintColor = self.view.tintColor;
+    [self.pageViewController setViewControllers:@[baseViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
 }
 

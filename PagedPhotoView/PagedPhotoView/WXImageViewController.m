@@ -9,7 +9,7 @@
 #import "WXImageViewController.h"
 #import "WXImageScrollView.h"
 
-@interface WXImageViewController () <UIScrollViewDelegate>
+@interface WXImageViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, readonly) NSUInteger pageIndex;
 @property (strong, nonatomic) DACircularProgressView *progressView;
 @property NSOperation *operation;
@@ -131,6 +131,32 @@ static UIImage *invalidPhoto;
     tapGesture.numberOfTapsRequired = 1;
     tapGesture.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:tapGesture];
+
+    UITapGestureRecognizer *zoomGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(zoomGestureHandler:)];
+    zoomGesture.numberOfTapsRequired = 2;
+    zoomGesture.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:zoomGesture];
+
+    [tapGesture requireGestureRecognizerToFail:zoomGesture];
+
+    for (UIGestureRecognizer *gesture in self.view.gestureRecognizers) {
+        if ([gesture isMemberOfClass:[UITapGestureRecognizer class]]) gesture.delegate = self;
+    }
+}
+
+- (void)zoomGestureHandler:(UITapGestureRecognizer *)gesture
+{
+    if (self.operation.isExecuting) return;
+
+    if (self.imageScrollView.zoomScale == 1) {
+        CGFloat scale = .25;
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = self.view.frame.size.height;
+        CGRect frame = CGRectMake(width * scale, height * scale, width - width * scale * 2, height - height * scale * 2);
+        [self.imageScrollView zoomToRect:frame animated:YES];
+    } else {
+        [self.imageScrollView zoomToRect:self.view.frame animated:YES];
+    }
 }
 
 - (void)tapGestureHander:(UITapGestureRecognizer *)gesture
@@ -141,8 +167,8 @@ static UIImage *invalidPhoto;
         } else {
             [self setChromeVisibility:NO animated:YES];
         }
+        [self setNeedsStatusBarAppearanceUpdate];
     }
-    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (BOOL)isChromeVisbile

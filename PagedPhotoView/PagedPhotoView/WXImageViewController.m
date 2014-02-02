@@ -89,7 +89,7 @@ static UIImage *invalidPhoto;
 
 - (NSUInteger)pageIndex
 {
-    return self.pageIndex;
+    return _pageIndex;
 }
 
 - (void)loadNetworkPhoto

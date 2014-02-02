@@ -70,8 +70,9 @@ static UIImage *invalidPhoto;
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     UIImage *image = self.photo.photo ? self.photo.photo : [photoCache objectForKey:self.photo.photoUrl];
     if (image) {
         self.imageScrollView.image = image ? image: placeholder;
@@ -80,9 +81,10 @@ static UIImage *invalidPhoto;
     }
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
     [self.operation cancel];
+    [super viewWillDisappear:animated];
 }
 
 - (NSUInteger)pageIndex

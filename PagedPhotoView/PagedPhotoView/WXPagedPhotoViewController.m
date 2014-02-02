@@ -66,9 +66,8 @@
 {
     id<WXPhotoProtocol> photo = [self.dataSource photoAtIndex:self.pageIndex - 1];
     if (photo){
-        self.pageIndex --;
-        self.title = self.viewTitle;
         WXImageViewController *controller = [WXImageViewController imageViewControllerForPhoto:photo andIndex:self.pageIndex];
+        controller.view.tintColor = self.view.tintColor;
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }
@@ -79,13 +78,23 @@
 {
     id<WXPhotoProtocol> photo = [self.dataSource photoAtIndex:self.pageIndex + 1];
     if (photo){
-        self.pageIndex ++;
-        self.title = self.viewTitle;
         WXImageViewController *controller = [WXImageViewController imageViewControllerForPhoto:photo andIndex:self.pageIndex];
+        controller.view.tintColor = self.view.tintColor;
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
     }
     return nil;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed
+{
+    if (completed){
+        self.pageIndex = [(WXImageViewController *)self.pageViewController.viewControllers.lastObject pageIndex];
+        self.title = self.viewTitle;
+    }
 }
 
 - (NSString *)viewTitle

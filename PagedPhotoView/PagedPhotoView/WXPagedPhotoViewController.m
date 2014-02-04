@@ -16,26 +16,13 @@
 
 @implementation WXPagedPhotoViewController
 
-- (NSCache *)photoCache
-{
-    if (!_photoCache) {
-        _photoCache = [[NSCache alloc] init];
-        [_photoCache setCountLimit:50];
-    }
-    return _photoCache;
-}
-
-- (void)setPhotoPlaceholder:(UIImage *)photoPlaceholder
-{
-    _photoPlaceholder = photoPlaceholder;
-    [WXImageViewController setPlaceholderPhoto:photoPlaceholder];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self setupToolBar];
 }
+
+#pragma mark - WXPagedPhotoViewController methods
 
 - (WXImageViewController *)imageViewController
 {
@@ -57,8 +44,39 @@
     WXImageViewController *baseViewController = [self viewControllerAtPageIndex:self.pageIndex];
     baseViewController.view.tintColor = self.view.tintColor;
     [self.pageViewController setViewControllers:@[baseViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-
+    [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:nil transitionCompleted:YES];
 }
+
+- (void)didLoadImage:(UIImage *)image atPageIndex:(NSUInteger)pageIndex;
+{
+    [self.imageViewController setImage:image forPageIndex:pageIndex];
+    [self.imageViewController setProgressViewHidden:YES atPageIndex:pageIndex];
+}
+
+- (void)photoDownloadProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex
+{
+    [self.imageViewController setProgress:progress atPageIndex:pageIndex];
+}
+
+- (NSString *)viewTitle
+{
+    return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.dataSource numberOfPhoto]];
+}
+
+- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
+{
+    [self.imageViewController setChromeVisibility:isVisible animated:animated];
+}
+
+- (void)reloadPhoto
+{
+    // todo - improve performance by set photo and title not regenerate view
+    id view = [self viewControllerAtPageIndex:self.pageIndex];
+    if (view) [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    self.title = self.viewTitle;
+}
+
+#pragma mark - private methods
 
 #pragma mark - UIPageViewController datasource
 
@@ -72,11 +90,11 @@
     return [self viewControllerAtPageIndex:self.pageIndex + 1];
 }
 
-- (id)viewControllerAtPageIndex:(NSUInteger)pageIndex
+- (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
 {
     id<WXPhotoProtocol> photo = [self.dataSource photoAtIndex:pageIndex];
     if (photo){
-        WXImageViewController *controller = [WXImageViewController imageViewControllerForPhoto:photo andIndex:pageIndex];
+        WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];
         controller.view.tintColor = self.view.tintColor;
         [(UIScrollView *)controller.view setZoomScale:1];
         return controller;
@@ -90,21 +108,19 @@
        transitionCompleted:(BOOL)completed
 {
     if (completed){
-        self.pageIndex = [(WXImageViewController *)self.pageViewController.viewControllers.lastObject pageIndex];
-        id<WXPhotoProtocol> photo = [(WXImageViewController *)self.pageViewController.viewControllers.lastObject photo];
+        BOOL isLoading = NO;
+        WXImageViewController *imageViewController = (WXImageViewController *)self.pageViewController.viewControllers.lastObject;
+        UIImage *image = [self.dataSource pagedPhotoViewController:self imageAtIndex:imageViewController.pageIndex isLoading:&isLoading];
+        [imageViewController setImage:image forPageIndex:imageViewController.pageIndex];
+        if (!isLoading) {
+            [self.imageViewController setProgressViewHidden:YES atPageIndex:imageViewController.pageIndex];
+        } else {
+            [self.imageViewController setProgressViewHidden:NO atPageIndex:imageViewController.pageIndex];
+        }
+        self.pageIndex = imageViewController.pageIndex;
         self.title = self.viewTitle;
-        [self.delegate pagePhotoViewController:self didLoadPhoto:photo atPageIndex:self.pageIndex];
+        [self.delegate pagePhotoViewController:self didScrollToPageIndex:self.pageIndex];
     }
-}
-
-- (NSString *)viewTitle
-{
-    return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.dataSource numberOfPhoto]];
-}
-
-- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
-{
-    [self.imageViewController setChromeVisibility:isVisible animated:animated];
 }
 
 #pragma mark - setup toolbars
@@ -127,13 +143,6 @@
         [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
         [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:previousViewControllers transitionCompleted:YES];
     }
-}
-
-- (void)reloadPhoto
-{
-    id view = [self viewControllerAtPageIndex:self.pageIndex];
-    if (view) [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    self.title = self.viewTitle;
 }
 
 - (void)setupToolBar

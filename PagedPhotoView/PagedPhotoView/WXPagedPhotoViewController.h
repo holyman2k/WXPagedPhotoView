@@ -14,23 +14,25 @@
 @protocol WXPagedPhotoViewControllerDataSource <NSObject>
 
 - (id<WXPhotoProtocol>)photoAtIndex:(NSUInteger)pageIndex;
+- (UIImage *)pagedPhotoViewController:(WXPagedPhotoViewController *)pagedPhotoViewController imageAtIndex:(NSUInteger)pageIndex isLoading:(BOOL *)isLoading;
 - (NSUInteger)numberOfPhoto;
+
 @end
 
 @protocol WXPagedPhotoViewControllerDelegate <NSObject>
 @optional
-- (void)pagePhotoViewController:(WXPagedPhotoViewController *)pagePhotoViewController
-                   didLoadPhoto:(id<WXPhotoProtocol>)photo
-                    atPageIndex:(NSUInteger)pageIndex;
+- (void)pagePhotoViewController:(WXPagedPhotoViewController *)pagePhotoViewController didScrollToPageIndex:(NSUInteger)pageIndex;
 @end
 
 @interface WXPagedPhotoViewController : UIViewController
 @property (weak, nonatomic) id<WXPagedPhotoViewControllerDataSource> dataSource;
 @property (weak, nonatomic) id<WXPagedPhotoViewControllerDelegate> delegate;
 @property (nonatomic) NSInteger pageIndex;
-@property (strong, nonatomic) NSCache *photoCache;
-@property (strong, nonatomic) UIImage *photoPlaceholder;
+@property (strong, nonatomic) UIImage *placeholderPhoto;
+@property (strong, nonatomic) UIImage *downloadFailedPhoto;
 
+- (void)didLoadImage:(UIImage *)image atPageIndex:(NSUInteger)pageIndex;
+- (void)photoDownloadProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex;
 - (void)initalize;
 - (void)nextPhoto:(id)sender;
 - (void)previousPhoto:(id)sender;

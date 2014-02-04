@@ -11,19 +11,17 @@
 
 @interface WXImageViewController : UIViewController
 
-+ (id)imageViewControllerForPhoto:(id<WXPhotoProtocol>)photo andIndex:(NSUInteger)index;
++ (id)imageViewControllerForImage:(UIImage *)image andPageIndex:(NSUInteger)pageIndex;
 
-+ (void)setPlaceholderPhoto:(UIImage *)image;
-
-+ (void)setInvalidPhoto:(UIImage *)image;
-
-+ (void)setPhotoCache:(NSCache *)cache;
-
-@property (strong, nonatomic) UIImage *photoPlaceholder;
-
-@property (strong, nonatomic, readonly) id<WXPhotoProtocol> photo;
+@property (nonatomic) bool isLoading;
 
 - (NSUInteger)pageIndex;
+
+- (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex;
+
+- (void)setProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex;
+
+- (void)setProgressViewHidden:(BOOL)hidden atPageIndex:(NSUInteger)pageIndex;
 
 - (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
 

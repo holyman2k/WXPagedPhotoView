@@ -25,6 +25,19 @@
     return imageViewController;
 }
 
+- (DACircularProgressView *)progressView
+{
+    if (!_progressView) {
+        _progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        _progressView.roundedCorners = YES;
+        _progressView.center = self.view.center;
+        _progressView.trackTintColor = [UIColor clearColor];
+        _progressView.progressTintColor = self.view.tintColor;
+        [self.view addSubview:_progressView];
+    }
+    return _progressView;
+}
+
 - (WXImageScrollView *)imageScrollView
 {
     return (WXImageScrollView *)self.view;
@@ -40,13 +53,6 @@
         scrollView.minimumZoomScale = 1;
         self.view = scrollView;
         [self setupGestures];
-
-        self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        self.progressView.roundedCorners = YES;
-        self.progressView.center = self.view.center;
-        self.progressView.trackTintColor = [UIColor clearColor];
-        self.progressView.progressTintColor = self.view.tintColor;
-        [self.view addSubview:self.progressView];
     }
     return self;
 }

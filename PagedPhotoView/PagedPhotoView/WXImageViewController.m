@@ -73,7 +73,7 @@
 - (void)setProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex
 {
     if (self.pageIndex == pageIndex) {
-        [self.progressView setProgress:progress animated:YES];
+        self.progressView.progress = progress;
     }
 }
 

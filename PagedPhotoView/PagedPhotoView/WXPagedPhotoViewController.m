@@ -72,7 +72,10 @@
 {
     // todo - improve performance by set photo and title not regenerate view
     id view = [self viewControllerAtPageIndex:self.pageIndex];
-    if (view) [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    if (view) {
+        [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:nil transitionCompleted:YES];
+    }
     self.title = self.viewTitle;
 }
 

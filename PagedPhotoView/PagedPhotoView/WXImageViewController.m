@@ -79,7 +79,7 @@
 
 - (void)setProgressViewHidden:(BOOL)hidden atPageIndex:(NSUInteger)pageIndex
 {
-    if (self.pageIndex == pageIndex) {
+    if (self.pageIndex == pageIndex && self.progressView.hidden != hidden) {
         self.progressView.hidden = hidden;
     }
 }

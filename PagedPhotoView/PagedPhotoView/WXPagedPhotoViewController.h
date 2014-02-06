@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WXPhotoProtocol.h"
+#import "WXImageViewController.h"
 
 @class WXPagedPhotoViewController;
 
@@ -39,4 +40,5 @@
 - (void)reloadPhoto;
 - (NSString *)viewTitle;
 - (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
+- (WXImageViewController *)imageViewController;
 @end

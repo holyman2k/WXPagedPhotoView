@@ -8,7 +8,6 @@
 
 #import "WXPagedPhotoViewController.h"
 #import "WXPhotoProtocol.h"
-#import "WXImageViewController.h"
 
 @interface WXPagedPhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;

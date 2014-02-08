@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WXPhotoProtocol.h"
 
 @interface WXImageViewController : UIViewController
 

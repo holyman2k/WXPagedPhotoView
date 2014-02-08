@@ -7,7 +7,6 @@
 //
 
 #import "WXPagedPhotoViewController.h"
-#import "WXPhotoProtocol.h"
 
 @interface WXPagedPhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
@@ -94,8 +93,8 @@
 
 - (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
 {
-    id<WXPhotoProtocol> photo = [self.dataSource photoAtIndex:pageIndex];
-    if (photo){
+    BOOL hasPhoto = [self.dataSource photoExistAtIndex:pageIndex];
+    if (hasPhoto){
         WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];
         controller.view.tintColor = self.view.tintColor;
         [(UIScrollView *)controller.view setZoomScale:1];
@@ -110,7 +109,7 @@
        transitionCompleted:(BOOL)completed
 {
     if (completed){
-        BOOL isLoading = NO;
+        BOOL isLoading = YES;
         WXImageViewController *imageViewController = (WXImageViewController *)self.pageViewController.viewControllers.lastObject;
         UIImage *image = [self.dataSource pagedPhotoViewController:self imageAtIndex:imageViewController.pageIndex isLoading:&isLoading];
         [imageViewController setImage:image forPageIndex:imageViewController.pageIndex];

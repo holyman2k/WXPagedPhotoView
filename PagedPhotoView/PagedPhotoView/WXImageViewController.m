@@ -82,6 +82,7 @@
     if (self.pageIndex == pageIndex && self.progressView.hidden != hidden) {
         self.progressView.hidden = hidden;
     }
+    self.isLoading = !hidden;
 }
 
 - (void)setupGestures
@@ -105,6 +106,8 @@
 
 - (void)zoomGestureHandler:(UITapGestureRecognizer *)gesture
 {
+    NSLog(@"zoom is loading: %d", self.isLoading);
+
     if (self.isLoading) return;
 
     if (self.imageScrollView.zoomScale == 1) {
@@ -144,7 +147,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return [(WXImageScrollView *)self.view imageView];
+    return self.isLoading ? nil : [(WXImageScrollView *)self.view imageView];
 }
 
 - (BOOL)prefersStatusBarHidden

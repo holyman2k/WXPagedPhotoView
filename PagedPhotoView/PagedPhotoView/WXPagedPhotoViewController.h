@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WXPhotoProtocol.h"
 #import "WXImageViewController.h"
 
 @class WXPagedPhotoViewController;
 
 @protocol WXPagedPhotoViewControllerDataSource <NSObject>
 
-- (id<WXPhotoProtocol>)photoAtIndex:(NSUInteger)pageIndex;
+- (BOOL)photoExistAtIndex:(NSUInteger)pageIndex;
 - (UIImage *)pagedPhotoViewController:(WXPagedPhotoViewController *)pagedPhotoViewController imageAtIndex:(NSUInteger)pageIndex isLoading:(BOOL *)isLoading;
 - (NSUInteger)numberOfPhoto;
 

@@ -24,6 +24,7 @@
 - (void)pagePhotoViewController:(WXPagedPhotoViewController *)pagePhotoViewController didScrollToPageIndex:(NSUInteger)pageIndex;
 @end
 
+
 @interface WXPagedPhotoViewController : UIViewController
 @property (weak, nonatomic) id<WXPagedPhotoViewControllerDataSource> dataSource;
 @property (weak, nonatomic) id<WXPagedPhotoViewControllerDelegate> delegate;

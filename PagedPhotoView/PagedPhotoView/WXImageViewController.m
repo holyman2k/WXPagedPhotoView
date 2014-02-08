@@ -129,7 +129,6 @@
         } else {
             [self setChromeVisibility:NO animated:YES];
         }
-        [self setNeedsStatusBarAppearanceUpdate];
     }
 }
 
@@ -142,7 +141,8 @@
 {
     [self.navigationController setNavigationBarHidden:!isVisible animated:animated];
     [self.navigationController setToolbarHidden:!isVisible animated:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:!isVisible withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];
+    [self setNeedsStatusBarAppearanceUpdate];
+//    [[UIApplication sharedApplication] setStatusBarHidden:!isVisible withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

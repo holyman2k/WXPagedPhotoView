@@ -39,9 +39,8 @@
     [self.view addSubview:self.pageViewController.view];
     self.title = self.viewTitle;
 
-    WXImageViewController *baseViewController = [self viewControllerAtPageIndex:self.pageIndex];
-    baseViewController.view.tintColor = self.view.tintColor;
-    [self.pageViewController setViewControllers:@[baseViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex];
+    [self.pageViewController setViewControllers:@[controller] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:nil transitionCompleted:YES];
 }
 
@@ -68,7 +67,6 @@
 
 - (void)reloadPhoto
 {
-    // todo - improve performance by set photo and title not regenerate view
     id view = [self viewControllerAtPageIndex:self.pageIndex];
     if (view) {
         [self.pageViewController setViewControllers:@[view] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -83,13 +81,16 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    return [self viewControllerAtPageIndex:self.pageIndex - 1];
+    WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex - 1];
+    return controller;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    return [self viewControllerAtPageIndex:self.pageIndex + 1];
+    WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex + 1];
+    return controller;
 }
+
 
 - (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
 {
@@ -98,6 +99,15 @@
         WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];
         controller.view.tintColor = self.view.tintColor;
         [(UIScrollView *)controller.view setZoomScale:1];
+        controller.view.tintColor = self.view.tintColor;
+        BOOL isLoading = YES;
+        UIImage *image = [self.dataSource pagedPhotoViewController:self imageAtIndex:controller.pageIndex isLoading:&isLoading];
+        [controller setImage:image forPageIndex:controller.pageIndex];
+        if (!isLoading) {
+            [controller setProgressViewHidden:YES atPageIndex:controller.pageIndex];
+        } else {
+            [controller setProgressViewHidden:NO atPageIndex:controller.pageIndex];
+        }
         return controller;
     }
     return nil;
@@ -109,16 +119,15 @@
        transitionCompleted:(BOOL)completed
 {
     if (completed){
-        BOOL isLoading = YES;
-        WXImageViewController *imageViewController = (WXImageViewController *)self.pageViewController.viewControllers.lastObject;
-        UIImage *image = [self.dataSource pagedPhotoViewController:self imageAtIndex:imageViewController.pageIndex isLoading:&isLoading];
-        [imageViewController setImage:image forPageIndex:imageViewController.pageIndex];
-        if (!isLoading) {
-            [self.imageViewController setProgressViewHidden:YES atPageIndex:imageViewController.pageIndex];
-        } else {
-            [self.imageViewController setProgressViewHidden:NO atPageIndex:imageViewController.pageIndex];
-        }
-        self.pageIndex = imageViewController.pageIndex;
+//        BOOL isLoading = YES;
+//        UIImage *image = [self.dataSource pagedPhotoViewController:self imageAtIndex:self.imageViewController.pageIndex isLoading:&isLoading];
+//        [self.imageViewController setImage:image forPageIndex:self.imageViewController.pageIndex];
+//        if (!isLoading) {
+//            [self.imageViewController setProgressViewHidden:YES atPageIndex:self.imageViewController.pageIndex];
+//        } else {
+//            [self.imageViewController setProgressViewHidden:NO atPageIndex:self.imageViewController.pageIndex];
+//        }
+        self.pageIndex = self.imageViewController.pageIndex;
         self.title = self.viewTitle;
         [self.delegate pagePhotoViewController:self didScrollToPageIndex:self.pageIndex];
     }

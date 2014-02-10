@@ -8,15 +8,31 @@
 
 #import "WXViewController.h"
 #import "WXPhoto.h"
+#import "WXKit.h"
+#import "AFNetworking.h"
 
-@interface WXViewController () <WXPagedPhotoViewControllerProtocol>
+@interface WXViewController () <WXPagedPhotoViewControllerDataSource>
 
 @property (strong, nonatomic) NSArray *images;
 @property (nonatomic) BOOL isPlaying;
 @property (strong, nonatomic) NSTimer *autoPlayTimer;
+@property (strong, nonatomic) NSMutableDictionary *operations;
+@property (strong, nonatomic) NSCache *cache;
 @end
 
 @implementation WXViewController
+
+- (NSCache *)cache
+{
+    if (!_cache) _cache = [[NSCache alloc]init];
+    return _cache;
+}
+
+- (NSMutableDictionary *)operations
+{
+    if (!_operations) _operations = [[NSMutableDictionary alloc] init];
+    return _operations;
+}
 
 - (NSArray *)images
 {
@@ -93,13 +109,57 @@
 
 #pragma mark - WXPhotoViewController delegate
 
-- (id<WXPhotoProtocol>)photoAtIndex:(NSUInteger)pageIndex
+- (BOOL)photoExistAtIndex:(NSUInteger)pageIndex
 {
-    return [self.images objectOrNilAtIndex:pageIndex];
+    return [self.images objectOrNilAtIndex:pageIndex] != nil;
+}
+
+- (UIImage *)pagedPhotoViewController:(WXPagedPhotoViewController *)pagedPhotoViewController imageAtIndex:(NSUInteger)pageIndex isLoading:(BOOL *)isLoading
+{
+    WXPhoto *photo = [self.images objectAtIndex:pageIndex];
+
+    UIImage *image = [self.cache objectForKey:photo.photoUrl.absoluteString];
+
+    if (image) {
+        return image;
+    }
+
+    AFHTTPRequestOperation *operation = self.operations[photo.photoUrl.absoluteString];
+    __weak WXViewController *me = self;
+    __weak NSCache *photoCache = self.cache;
+    __weak NSMutableDictionary *operations = self.operations;
+
+    if (operation) {
+        *isLoading = YES;
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+            if (pageIndex == self.pageIndex) {
+                [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
+                double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
+                [me photoDownloadProgress:percent atPageIndex:pageIndex];
+            }
+        }];
+    } else {
+        *isLoading = YES;
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:photo.photoUrl]];
+        [self.operations setObject:operation forKey:photo.photoUrl.absoluteString];
+        operation.responseSerializer = [AFImageResponseSerializer serializer];
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, UIImage *image) {
+            [me didLoadImage:image atPageIndex:pageIndex];
+            [photoCache setObject:image forKey:photo.photoUrl.absoluteString];
+            [operations removeObjectForKey:photo.photoUrl.absoluteString];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [me didLoadImage:me.downloadFailedPhoto atPageIndex:pageIndex];
+            [operations removeObjectForKey:photo.photoUrl.absoluteString];
+        }];
+        [operation start];
+
+    }
+    return nil;
 }
 
 - (NSUInteger)numberOfPhoto
 {
     return self.images.count;
 }
+
 @end

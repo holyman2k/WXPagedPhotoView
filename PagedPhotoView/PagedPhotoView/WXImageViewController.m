@@ -12,6 +12,7 @@
 @interface WXImageViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, readonly) NSUInteger pageIndex;
 @property (strong, nonatomic) DACircularProgressView *progressView;
+@property (nonatomic) bool isLoading;
 @end
 
 @implementation WXImageViewController
@@ -49,7 +50,7 @@
         _pageIndex = pageIndex;
         WXImageScrollView *scrollView = [[WXImageScrollView alloc] initWithFrame:self.view.frame];
         scrollView.delegate = self;
-        scrollView.maximumZoomScale = 3;
+        scrollView.maximumZoomScale = 2;
         scrollView.minimumZoomScale = 1;
         self.view = scrollView;
         [self setupGestures];
@@ -66,6 +67,7 @@
 {
     if (self.pageIndex == pageIndex) {
         self.imageScrollView.image = image;
+//        self.imageScrollView.maximumZoomScale = MAX(1, MAX(image.size.height / self.view.frame.size.height, image.size.width / self.view.frame.size.width));
         self.imageScrollView.zoomScale = 1;
     }
 }
@@ -79,10 +81,12 @@
 
 - (void)setProgressViewHidden:(BOOL)hidden atPageIndex:(NSUInteger)pageIndex
 {
-    if (self.pageIndex == pageIndex && self.progressView.hidden != hidden) {
-        self.progressView.hidden = hidden;
+    if (self.pageIndex == pageIndex) {
+        if (self.progressView.hidden != hidden) {
+            self.progressView.hidden = hidden;
+        }
+        self.isLoading = !hidden;
     }
-    self.isLoading = !hidden;
 }
 
 - (void)setupGestures
@@ -106,8 +110,6 @@
 
 - (void)zoomGestureHandler:(UITapGestureRecognizer *)gesture
 {
-    NSLog(@"zoom is loading: %d", self.isLoading);
-
     if (self.isLoading) return;
 
     if (self.imageScrollView.zoomScale == 1) {
@@ -142,7 +144,6 @@
     [self.navigationController setNavigationBarHidden:!isVisible animated:animated];
     [self.navigationController setToolbarHidden:!isVisible animated:animated];
     [self setNeedsStatusBarAppearanceUpdate];
-//    [[UIApplication sharedApplication] setStatusBarHidden:!isVisible withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

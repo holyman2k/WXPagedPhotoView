@@ -32,6 +32,9 @@
 
 - (void)setImage:(UIImage *)image
 {
+//#if DEBUG
+//    if (image) image = [UIImage imageNamed:@"image-not-found"];
+//#endif
     self.imageView.image = image;
 }
 

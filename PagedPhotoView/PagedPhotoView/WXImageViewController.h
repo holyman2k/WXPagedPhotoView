@@ -12,8 +12,6 @@
 
 + (id)imageViewControllerForImage:(UIImage *)image andPageIndex:(NSUInteger)pageIndex;
 
-@property (nonatomic) bool isLoading;
-
 - (NSUInteger)pageIndex;
 
 - (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex;

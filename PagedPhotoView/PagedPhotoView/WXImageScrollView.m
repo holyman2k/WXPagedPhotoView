@@ -23,8 +23,12 @@
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         _imageView.translatesAutoresizingMaskIntoConstraints = YES;
-        self.backgroundColor = [UIColor clearColor];
+        _imageView.clipsToBounds = NO;
         _imageView.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
+
+        self.minimumZoomScale = 1;
+        self.maximumZoomScale = 2;
         [self addSubview:_imageView];
     }
     return self;
@@ -32,10 +36,12 @@
 
 - (void)setImage:(UIImage *)image
 {
-//#if DEBUG
-//    if (image) image = [UIImage imageNamed:@"image-not-found"];
-//#endif
     self.imageView.image = image;
+    if (image) {
+        [self.imageView sizeToFit];
+        self.imageView.center = self.center;
+
+    }
 }
 
 - (UIImage *)image

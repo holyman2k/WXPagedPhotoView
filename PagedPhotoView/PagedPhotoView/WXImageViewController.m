@@ -50,8 +50,6 @@
         _pageIndex = pageIndex;
         WXImageScrollView *scrollView = [[WXImageScrollView alloc] initWithFrame:self.view.frame];
         scrollView.delegate = self;
-        scrollView.maximumZoomScale = 2;
-        scrollView.minimumZoomScale = 1;
         self.view = scrollView;
         [self setupGestures];
     }
@@ -67,8 +65,6 @@
 {
     if (self.pageIndex == pageIndex) {
         self.imageScrollView.image = image;
-//        self.imageScrollView.maximumZoomScale = MAX(1, MAX(image.size.height / self.view.frame.size.height, image.size.width / self.view.frame.size.width));
-        self.imageScrollView.zoomScale = 1;
     }
 }
 

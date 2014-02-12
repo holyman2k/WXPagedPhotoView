@@ -64,7 +64,6 @@
 
 - (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex
 {
-    NSLog(@"set image at index: %d, current index: %d", pageIndex, self.pageIndex);
     if (self.pageIndex == pageIndex) {
         self.imageScrollView.image = image;
     }
@@ -112,36 +111,13 @@
 
     if (self.imageScrollView.zoomScale == 1) {
         CGFloat scale = .25;
-        CGFloat width = self.view.frame.size.width;
-        CGFloat height = self.view.frame.size.height;
+        CGFloat width = self.imageScrollView.imageView.bounds.size.width;
+        CGFloat height = self.imageScrollView.imageView.bounds.size.height;
         CGRect frame = CGRectMake(width * scale, height * scale, width - width * scale * 2, height - height * scale * 2);
         [self.imageScrollView zoomToRect:frame animated:YES];
     } else {
         [self.imageScrollView zoomToRect:self.view.frame animated:YES];
     }
-}
-
-- (void)scrollViewDidZoom:(UIScrollView *)sv
-{
-    UIView* zoomView = [sv.delegate viewForZoomingInScrollView:sv];
-    CGRect zvf = zoomView.frame;
-    if(zvf.size.width < sv.bounds.size.width)
-    {
-        zvf.origin.x = (sv.bounds.size.width - zvf.size.width) / 2.0;
-    }
-    else
-    {
-        zvf.origin.x = 0.0;
-    }
-    if(zvf.size.height < sv.bounds.size.height)
-    {
-        zvf.origin.y = (sv.bounds.size.height - zvf.size.height) / 2.0;
-    }
-    else
-    {
-        zvf.origin.y = 0.0;
-    }
-    zoomView.frame = zvf;
 }
 
 - (void)tapGestureHander:(UITapGestureRecognizer *)gesture
@@ -179,8 +155,15 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
 {
-
+    self.progressView.center = self.view.center;
     [self.imageScrollView fitImage];
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+{
+    if (!CGPointEqualToPoint(view.center, self.view.center)) {
+        view.center = self.view.center;
+    }
 }
 
 @end

@@ -22,10 +22,10 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _imageView = [[UIImageView alloc] initWithFrame:frame];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
+        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         _imageView.translatesAutoresizingMaskIntoConstraints = YES;
         _imageView.clipsToBounds = NO;
-        _imageView.backgroundColor = [UIColor grayColor];
+        _imageView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:_imageView];
     }
@@ -35,7 +35,6 @@
 - (void)setImage:(UIImage *)image
 {
     if (image) {
-        NSLog(@"set image with size: %@", NSStringFromCGSize(image.size));
         self.imageView.image = image;
         [self fitImage];
     }
@@ -48,7 +47,9 @@
         self.imageView.center = self.center;
         self.contentSize = self.imageView.bounds.size;
         self.minimumZoomScale = self.zoomScale;
-        self.maximumZoomScale = MAX(self.imageView.image.size.width / self.imageView.bounds.size.width, 1);
+        self.maximumZoomScale = MAX(self.imageView.image.size.width / self.imageView.bounds.size.width * 1.5, 1.5);
+    } else {
+        self.imageView.center = self.center;
     }
 }
 

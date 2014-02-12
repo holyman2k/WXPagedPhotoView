@@ -159,11 +159,22 @@
     [self.imageScrollView fitImage];
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    if (!CGPointEqualToPoint(view.center, self.view.center)) {
-        view.center = self.view.center;
+    UIView* zoomView = [scrollView.delegate viewForZoomingInScrollView:scrollView];
+    CGRect zoomViewFrame = zoomView.frame;
+    if (zoomViewFrame.size.width < scrollView.bounds.size.width) {
+        zoomViewFrame.origin.x = (scrollView.bounds.size.width - zoomViewFrame.size.width) / 2.0;
+    } else {
+        zoomViewFrame.origin.x = 0.0;
     }
+
+    if (zoomViewFrame.size.height < scrollView.bounds.size.height) {
+        zoomViewFrame.origin.y = (scrollView.bounds.size.height - zoomViewFrame.size.height) / 2.0;
+    } else {
+        zoomViewFrame.origin.y = 0.0;
+    }
+    zoomView.frame = zoomViewFrame;
 }
 
 @end

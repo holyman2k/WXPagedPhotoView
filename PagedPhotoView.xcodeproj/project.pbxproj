@@ -27,6 +27,7 @@
 		6F290626188F88A700A119E8 /* WXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F290625188F88A700A119E8 /* WXViewController.m */; };
 		6F2FEF38188F989E00BAC155 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F2FEF37188F989E00BAC155 /* MobileCoreServices.framework */; };
 		6F2FEF3A188F98A300BAC155 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F2FEF39188F98A300BAC155 /* SystemConfiguration.framework */; };
+		6F388B9618AC259400B9C6E0 /* UIImageView+WXKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F388B9518AC259400B9C6E0 /* UIImageView+WXKit.m */; };
 		6F6E555918A98982004BEF4F /* WXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6E555818A98982004BEF4F /* WXPhoto.m */; };
 		6FCD7DC3189DD0110078C4E8 /* NSArray+WXKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCD7DB1189DD0110078C4E8 /* NSArray+WXKit.m */; };
 		6FCD7DC4189DD0110078C4E8 /* NSDate+WXKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCD7DB3189DD0110078C4E8 /* NSDate+WXKit.m */; };
@@ -88,6 +89,8 @@
 		6F290625188F88A700A119E8 /* WXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXViewController.m; sourceTree = "<group>"; };
 		6F2FEF37188F989E00BAC155 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		6F2FEF39188F98A300BAC155 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		6F388B9418AC259400B9C6E0 /* UIImageView+WXKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WXKit.h"; sourceTree = "<group>"; };
+		6F388B9518AC259400B9C6E0 /* UIImageView+WXKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WXKit.m"; sourceTree = "<group>"; };
 		6F6E555718A98982004BEF4F /* WXPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXPhoto.h; sourceTree = "<group>"; };
 		6F6E555818A98982004BEF4F /* WXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXPhoto.m; sourceTree = "<group>"; };
 		6FCD7DB0189DD0110078C4E8 /* NSArray+WXKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WXKit.h"; sourceTree = "<group>"; };
@@ -280,6 +283,8 @@
 				6FCD7DBD189DD0110078C4E8 /* UIDevice+WXKit.m */,
 				6FCD7DBE189DD0110078C4E8 /* UIImage+WXKit.h */,
 				6FCD7DBF189DD0110078C4E8 /* UIImage+WXKit.m */,
+				6F388B9418AC259400B9C6E0 /* UIImageView+WXKit.h */,
+				6F388B9518AC259400B9C6E0 /* UIImageView+WXKit.m */,
 				6FCD7DC0189DD0110078C4E8 /* UILabel+WXKit.h */,
 				6FCD7DC1189DD0110078C4E8 /* UILabel+WXKit.m */,
 				6FCD7DC2189DD0110078C4E8 /* WXKit.h */,
@@ -446,6 +451,7 @@
 				6FCD7DC8189DD0110078C4E8 /* UIColor+WXKit.m in Sources */,
 				6F290626188F88A700A119E8 /* WXViewController.m in Sources */,
 				6FCD7DE5189DD0210078C4E8 /* AFHTTPRequestOperationManager.m in Sources */,
+				6F388B9618AC259400B9C6E0 /* UIImageView+WXKit.m in Sources */,
 				6FCD7DE8189DD0210078C4E8 /* AFSecurityPolicy.m in Sources */,
 				6FCD7DC5189DD0110078C4E8 /* NSMutableArray+WXKit.m in Sources */,
 			);

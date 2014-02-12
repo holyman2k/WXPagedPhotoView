@@ -146,6 +146,7 @@
 - (void)setCurrentPageToViewController:(WXImageViewController *)viewController
 {
     [self.pageViewController setViewControllers:@[viewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self pageViewController:self.pageViewController didFinishAnimating:YES previousViewControllers:@[self.imageViewController] transitionCompleted:YES];
     [self prepairToLoadImageForViewController:viewController];
 }
 

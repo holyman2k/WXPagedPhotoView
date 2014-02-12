@@ -132,11 +132,9 @@
     if (operation) {
         *isLoading = YES;
         [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-            if (pageIndex == self.pageIndex) {
-                [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
-                double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
-                [me photoDownloadProgress:percent atPageIndex:pageIndex];
-            }
+            [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
+            double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
+            [me photoDownloadProgress:percent atPageIndex:pageIndex];
         }];
     } else {
         *isLoading = YES;
@@ -151,6 +149,13 @@
             [me didLoadImage:me.downloadFailedPhoto atPageIndex:pageIndex];
             [operations removeObjectForKey:photo.photoUrl.absoluteString];
         }];
+
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+            CGFloat percent = (CGFloat)totalBytesRead / (CGFloat)totalBytesExpectedToRead;
+            [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
+            [self photoDownloadProgress:percent atPageIndex:pageIndex];
+        }];
+
         [operation start];
 
     }

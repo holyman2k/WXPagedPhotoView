@@ -14,6 +14,6 @@
 
 @property (strong, nonatomic) UIImage *image;
 
-- (id)imageView;
+- (void)fitImage;
 
 @end

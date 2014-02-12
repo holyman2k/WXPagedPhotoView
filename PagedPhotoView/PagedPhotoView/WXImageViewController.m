@@ -8,6 +8,7 @@
 
 #import "WXImageViewController.h"
 #import "WXImageScrollView.h"
+#import "DACircularProgressView.h"
 
 @interface WXImageViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, readonly) NSUInteger pageIndex;
@@ -63,6 +64,7 @@
 
 - (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex
 {
+    NSLog(@"set image at index: %d, current index: %d", pageIndex, self.pageIndex);
     if (self.pageIndex == pageIndex) {
         self.imageScrollView.image = image;
     }
@@ -119,6 +121,29 @@
     }
 }
 
+- (void)scrollViewDidZoom:(UIScrollView *)sv
+{
+    UIView* zoomView = [sv.delegate viewForZoomingInScrollView:sv];
+    CGRect zvf = zoomView.frame;
+    if(zvf.size.width < sv.bounds.size.width)
+    {
+        zvf.origin.x = (sv.bounds.size.width - zvf.size.width) / 2.0;
+    }
+    else
+    {
+        zvf.origin.x = 0.0;
+    }
+    if(zvf.size.height < sv.bounds.size.height)
+    {
+        zvf.origin.y = (sv.bounds.size.height - zvf.size.height) / 2.0;
+    }
+    else
+    {
+        zvf.origin.y = 0.0;
+    }
+    zoomView.frame = zvf;
+}
+
 - (void)tapGestureHander:(UITapGestureRecognizer *)gesture
 {
     if (gesture.state == UIGestureRecognizerStateEnded) {
@@ -151,4 +176,11 @@
 {
     return self.navigationController.navigationBarHidden;
 }
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+
+    [self.imageScrollView fitImage];
+}
+
 @end

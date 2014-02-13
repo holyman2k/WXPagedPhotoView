@@ -25,7 +25,7 @@
 //        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         _imageView.translatesAutoresizingMaskIntoConstraints = YES;
         _imageView.clipsToBounds = NO;
-        _imageView.backgroundColor = [UIColor grayColor];
+        _imageView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:_imageView];
     }

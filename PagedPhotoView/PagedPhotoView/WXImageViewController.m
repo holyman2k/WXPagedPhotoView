@@ -61,6 +61,14 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.isMovingToParentViewController) {
+        [self.navigationController setToolbarHidden:NO animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+}
+
 #pragma mark - public methods
 
 - (NSUInteger)pageIndex

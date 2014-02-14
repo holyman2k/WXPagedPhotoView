@@ -77,13 +77,14 @@
 
 
 - (void)didLoadImage:(UIImage *)image forImageViewController:(WXImageViewController *)imageViewController
-{    
+{
     imageViewController.image = image;
     imageViewController.progressViewHidden = YES;
 }
 
 - (void)setDownloadProgress:(CGFloat)progress forImageViewController:(WXImageViewController *)imageViewController;
 {
+    if (imageViewController) imageViewController.progressViewHidden = NO;
     imageViewController.progress = progress;
 }
 
@@ -158,8 +159,6 @@
 
 - (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
 {
-//    if (pageIndex < 0) return nil;
-    NSLog(@"create image view for page index: %lu", (unsigned long)pageIndex);
     BOOL hasPhoto = [self.dataSource photoExistAtIndex:pageIndex];
     if (hasPhoto){
         WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];

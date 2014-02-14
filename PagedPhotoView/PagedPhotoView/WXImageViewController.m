@@ -13,7 +13,7 @@
 @interface WXImageViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, readonly) NSUInteger pageIndex;
 @property (strong, nonatomic) DACircularProgressView *progressView;
-@property (nonatomic) bool isLoading;
+@property (nonatomic) BOOL isLoading;
 @end
 
 @implementation WXImageViewController
@@ -91,16 +91,20 @@
     }
 }
 
-- (BOOL)isChromeVisbile
+- (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated;
 {
-    return self.navigationController.navigationBarHidden;
-}
-
-- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:!isVisible animated:animated];
-    [self.navigationController setToolbarHidden:!isVisible animated:animated];
-    [self setNeedsStatusBarAppearanceUpdate];
+    _isChromeHidden = hidden;
+    if (!animated) {
+        self.navigationController.navigationBar.alpha = hidden ? 0 : 1;
+        self.navigationController.toolbar.alpha = hidden ? 0 : 1;
+        [self setNeedsStatusBarAppearanceUpdate];
+    } else {
+        [UIView animateWithDuration:.25 animations:^(void) {
+            self.navigationController.navigationBar.alpha = hidden ? 0 : 1;
+            self.navigationController.toolbar.alpha = hidden ? 0 : 1;
+            [self setNeedsStatusBarAppearanceUpdate];
+        }];
+    }
 }
 
 #pragma mark - gesture handling
@@ -142,11 +146,7 @@
 - (void)tapGestureHander:(UITapGestureRecognizer *)gesture
 {
     if (gesture.state == UIGestureRecognizerStateEnded) {
-        if (self.isChromeVisbile) {
-            [self setChromeVisibility:YES animated:YES];
-        } else {
-            [self setChromeVisibility:NO animated:YES];
-        }
+        [self setChromeHidden:!self.isChromeHidden animated:YES];
     }
 }
 

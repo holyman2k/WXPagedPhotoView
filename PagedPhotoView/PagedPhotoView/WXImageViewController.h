@@ -10,6 +10,8 @@
 
 @interface WXImageViewController : UIViewController
 
+@property (nonatomic, readonly) BOOL isChromeHidden;
+
 + (id)imageViewControllerForImage:(UIImage *)image andPageIndex:(NSUInteger)pageIndex;
 
 - (NSUInteger)pageIndex;
@@ -20,8 +22,6 @@
 
 - (void)setProgressViewHidden:(BOOL)hidden atPageIndex:(NSUInteger)pageIndex;
 
-- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
-
-- (BOOL)isChromeVisbile;
+- (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end

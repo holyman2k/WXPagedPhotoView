@@ -93,9 +93,9 @@
     return [NSString stringWithFormat:@"%ld of %ld", (unsigned long)(self.pageIndex + 1), (unsigned long)[self.dataSource numberOfPhoto]];
 }
 
-- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
+- (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated
 {
-    [self.imageViewController setChromeVisibility:isVisible animated:animated];
+    [self.imageViewController setChromeHidden:hidden animated:animated];
 }
 
 - (void)reloadPhoto
@@ -149,7 +149,7 @@
 {
     WXImageViewController *viewController = pendingViewControllers.lastObject;
     [self prepairToLoadImageForViewController:viewController];
-    [self setChromeVisibility:NO animated:YES];
+    [self setChromeHidden:YES animated:YES];
 }
 
 #pragma mark - toolbar event handler

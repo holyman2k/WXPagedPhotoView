@@ -39,6 +39,6 @@
 - (void)previousPhoto:(id)sender;
 - (void)reloadPhoto;
 - (NSString *)viewTitle;
-- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated;
+- (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated;
 - (WXImageViewController *)imageViewController;
 @end

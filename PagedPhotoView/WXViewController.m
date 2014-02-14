@@ -85,7 +85,7 @@
         [self.autoPlayTimer invalidate];
         self.autoPlayTimer = nil;
     } else {
-        [self setChromeVisibility:NO animated:YES];
+        [self setChromeHidden:YES animated:YES];
         UIBarButtonItem *playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(setAutoPlay:)];
         [toolbarItems removeObjectAtIndex:3];
         [toolbarItems insertObject:playButton atIndex:3];
@@ -101,7 +101,7 @@
 {
     if (self.pageIndex == self.images.count - 1) {
         [self setAutoPlay:nil];
-        [self setChromeVisibility:YES animated:YES];
+        [self setChromeHidden:YES animated:YES];
     } else {
         [self nextPhoto:self];
     }
@@ -116,48 +116,36 @@
 
 - (UIImage *)pagedPhotoViewController:(WXPagedPhotoViewController *)pagedPhotoViewController imageAtIndex:(NSUInteger)pageIndex isLoading:(BOOL *)isLoading
 {
-    WXPhoto *photo = [self.images objectAtIndex:pageIndex];
+    WXPhoto *photo = [self.images objectOrNilAtIndex:pageIndex];
+    if (!photo) return nil;
 
-    UIImage *image = [self.cache objectForKey:photo.photoUrl.absoluteString];
-
-    if (image) {
-        return image;
-    }
-
-    AFHTTPRequestOperation *operation = self.operations[photo.photoUrl.absoluteString];
-    __weak WXViewController *me = self;
-    __weak NSCache *photoCache = self.cache;
-    __weak NSMutableDictionary *operations = self.operations;
-
-    if (operation) {
-        *isLoading = YES;
-        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-            [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
-            double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
-            [me photoDownloadProgress:percent atPageIndex:pageIndex];
-        }];
-    } else {
+    if (![self.operations objectForKey:photo.photoUrl.absoluteString]) {
         *isLoading = YES;
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:photo.photoUrl]];
         [self.operations setObject:operation forKey:photo.photoUrl.absoluteString];
         operation.responseSerializer = [AFImageResponseSerializer serializer];
+
+        __weak WXViewController *me = self;
+        __weak NSMutableDictionary *operations = self.operations;
+
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, UIImage *image) {
             [me didLoadImage:image atPageIndex:pageIndex];
-            [photoCache setObject:image forKey:photo.photoUrl.absoluteString];
             [operations removeObjectForKey:photo.photoUrl.absoluteString];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [me didLoadImage:me.downloadFailedPhoto atPageIndex:pageIndex];
             [operations removeObjectForKey:photo.photoUrl.absoluteString];
         }];
 
-        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-            CGFloat percent = (CGFloat)totalBytesRead / (CGFloat)totalBytesExpectedToRead;
-            [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
-            [self photoDownloadProgress:percent atPageIndex:pageIndex];
+        [operation setDownloadProgressBlock: ^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+
+            if (pageIndex == self.pageIndex) {
+                [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
+                double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
+                [me photoDownloadProgress:percent atPageIndex:pageIndex];
+            }
         }];
 
         [operation start];
-
     }
     return nil;
 }

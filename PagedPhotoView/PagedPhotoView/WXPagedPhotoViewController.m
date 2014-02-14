@@ -14,24 +14,44 @@
 
 @implementation WXPagedPhotoViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self setupToolBar];
-}
-
-#pragma mark - WXPagedPhotoViewController methods
+#pragma mark - setter and getter
 
 - (WXImageViewController *)imageViewController
 {
     return (WXImageViewController *)self.pageViewController.viewControllers.firstObject;
 }
 
-- (NSInteger)pageIndex
+#pragma mark - Initalizer
+
+- (void)viewDidLoad
 {
-    if (self.imageViewController) _pageIndex = self.imageViewController.pageIndex;
-    return _pageIndex;
+    [super viewDidLoad];
+
+    // setup toolbar
+    UIImage *previousIcon = [UIImage imageNamed:@"arrowLeft"];
+    UIImage *nextIcon = [UIImage imageNamed:@"arrowRight"];
+
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 7) {
+        previousIcon = [previousIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        nextIcon = [nextIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
+
+    UIBarButtonItem *previousButton = [[UIBarButtonItem alloc] initWithImage:previousIcon
+                                                                       style:UIBarButtonItemStylePlain target:self action:@selector(previousPhoto:)];
+    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithImage:nextIcon
+                                                                   style:UIBarButtonItemStylePlain target:self action:@selector(nextPhoto:)];
+
+    UIBarButtonItem *leftFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *rightFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+
+    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedSpace.width = 50;
+
+    [self setToolbarItems:@[leftFlexibleSpace, previousButton, fixedSpace, nextButton, rightFlexibleSpace] animated:YES];
 }
+
+#pragma mark - public methods
+
 - (void)initalize
 {
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
@@ -48,6 +68,13 @@
     WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex];
     if (controller) [self setCurrentPageToViewController:controller];
 }
+
+- (NSInteger)pageIndex
+{
+    if (self.imageViewController) _pageIndex = self.imageViewController.pageIndex;
+    return _pageIndex;
+}
+
 
 - (void)didLoadImage:(UIImage *)image atPageIndex:(NSUInteger)pageIndex;
 {
@@ -79,8 +106,6 @@
     }
     self.title = self.viewTitle;
 }
-
-#pragma mark - private methods
 
 #pragma mark - UIPageViewController datasource
 
@@ -127,7 +152,7 @@
     [self setChromeVisibility:NO animated:YES];
 }
 
-#pragma mark - setup toolbars
+#pragma mark - toolbar event handler
 
 - (void)nextPhoto:(id)sender
 {
@@ -162,31 +187,7 @@
     }
 }
 
-- (void)setupToolBar
-{
-    UIImage *previousIcon = [UIImage imageNamed:@"arrowLeft"];
-    UIImage *nextIcon = [UIImage imageNamed:@"arrowRight"];
-
-    if ([UIDevice currentDevice].systemVersion.floatValue >= 7) {
-        previousIcon = [previousIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        nextIcon = [nextIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    }
-
-    UIBarButtonItem *previousButton = [[UIBarButtonItem alloc] initWithImage:previousIcon
-                                                                       style:UIBarButtonItemStylePlain target:self action:@selector(previousPhoto:)];
-    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithImage:nextIcon
-                                                                   style:UIBarButtonItemStylePlain target:self action:@selector(nextPhoto:)];
-
-    UIBarButtonItem *leftFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *rightFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-
-    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    fixedSpace.width = 50;
-
-    [self setToolbarItems:@[leftFlexibleSpace, previousButton, fixedSpace, nextButton, rightFlexibleSpace] animated:YES];
-}
-
-#pragma mark - rotation
+#pragma mark - rotation and status bar tweak
 
 - (BOOL)shouldAutorotate
 {

@@ -20,12 +20,7 @@
 
 @synthesize pageIndex = _pageIndex;
 
-+ (id)imageViewControllerForImage:(UIImage *)image andPageIndex:(NSUInteger)pageIndex
-{
-    WXImageViewController *imageViewController = [[self alloc] initWithPageIndex:pageIndex];
-    imageViewController.imageScrollView.image = image;
-    return imageViewController;
-}
+#pragma mark - setter and getter
 
 - (DACircularProgressView *)progressView
 {
@@ -39,10 +34,18 @@
     }
     return _progressView;
 }
-
 - (WXImageScrollView *)imageScrollView
 {
     return (WXImageScrollView *)self.view;
+}
+
+#pragma mark - initalizer
+
++ (id)imageViewControllerForImage:(UIImage *)image andPageIndex:(NSUInteger)pageIndex
+{
+    WXImageViewController *imageViewController = [[self alloc] initWithPageIndex:pageIndex];
+    imageViewController.imageScrollView.image = image;
+    return imageViewController;
 }
 
 - (id)initWithPageIndex:(NSUInteger)pageIndex
@@ -56,6 +59,8 @@
     }
     return self;
 }
+
+#pragma mark - public methods
 
 - (NSUInteger)pageIndex
 {
@@ -85,6 +90,20 @@
         self.isLoading = !hidden;
     }
 }
+
+- (BOOL)isChromeVisbile
+{
+    return self.navigationController.navigationBarHidden;
+}
+
+- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:!isVisible animated:animated];
+    [self.navigationController setToolbarHidden:!isVisible animated:animated];
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+#pragma mark - gesture handling
 
 - (void)setupGestures
 {
@@ -131,32 +150,11 @@
     }
 }
 
-- (BOOL)isChromeVisbile
-{
-    return self.navigationController.navigationBarHidden;
-}
-
-- (void)setChromeVisibility:(BOOL)isVisible animated:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:!isVisible animated:animated];
-    [self.navigationController setToolbarHidden:!isVisible animated:animated];
-    [self setNeedsStatusBarAppearanceUpdate];
-}
+#pragma mark - scroll view zoom
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.isLoading ? nil : [(WXImageScrollView *)self.view imageView];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return self.navigationController.navigationBarHidden;
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
-{
-    self.progressView.center = self.view.center;
-    [self.imageScrollView fitImage];
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
@@ -177,4 +175,16 @@
     zoomView.frame = zoomViewFrame;
 }
 
+#pragma mark - rotation and status bar tweak
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.progressView.center = self.view.center;
+    [self.imageScrollView fitImage];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return self.navigationController.navigationBarHidden;
+}
 @end

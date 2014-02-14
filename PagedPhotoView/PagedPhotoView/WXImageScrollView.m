@@ -15,6 +15,15 @@
 
 @implementation WXImageScrollView
 
+#pragma mark - setter and getter
+
+- (UIImage *)image
+{
+    return self.imageView.image;
+}
+
+#pragma mark - Initalizer
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -51,11 +60,6 @@
     } else {
         self.imageView.center = self.center;
     }
-}
-
-- (UIImage *)image
-{
-    return self.imageView.image;
 }
 
 @end

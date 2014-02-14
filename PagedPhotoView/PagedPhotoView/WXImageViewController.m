@@ -34,6 +34,7 @@
     }
     return _progressView;
 }
+
 - (WXImageScrollView *)imageScrollView
 {
     return (WXImageScrollView *)self.view;
@@ -69,6 +70,7 @@
 
 - (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex
 {
+//    NSLog(@"set image for page index %d, current page index %d", pageIndex, self.pageIndex);
     if (self.pageIndex == pageIndex) {
         self.imageScrollView.image = image;
     }

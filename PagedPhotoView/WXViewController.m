@@ -11,7 +11,7 @@
 #import "WXKit.h"
 #import "AFNetworking.h"
 
-@interface WXViewController () <WXPagedPhotoViewControllerDataSource>
+@interface WXViewController () <WXPagedPhotoViewControllerDataSource, WXPagedPhotoViewControllerDelegate>
 
 @property (strong, nonatomic) NSArray *images;
 @property (nonatomic) BOOL isPlaying;
@@ -55,6 +55,7 @@
 {
     [super viewDidLoad];
     self.dataSource = self;
+    self.delegate = self;
     [self initalize];
 
     NSMutableArray *toolbarItems = self.toolbarItems.mutableCopy;
@@ -153,6 +154,11 @@
 - (NSUInteger)numberOfPhoto
 {
     return self.images.count;
+}
+
+- (void)pagePhotoViewController:(WXPagedPhotoViewController *)pagePhotoViewController didScrollToPageIndex:(NSUInteger)pageIndex
+{
+
 }
 
 @end

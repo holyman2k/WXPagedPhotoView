@@ -77,8 +77,7 @@
 
 
 - (void)didLoadImage:(UIImage *)image atPageIndex:(NSUInteger)pageIndex;
-{
-    
+{    
     [self.imageViewController setImage:image forPageIndex:pageIndex];
     [self.imageViewController setProgressViewHidden:YES atPageIndex:pageIndex];
 }
@@ -123,17 +122,6 @@
     return controller;
 }
 
-- (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
-{
-    BOOL hasPhoto = [self.dataSource photoExistAtIndex:pageIndex];
-    if (hasPhoto){
-        WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];
-        controller.view.tintColor = self.view.tintColor;
-        return controller;
-    }
-    return nil;
-}
-
 - (void)pageViewController:(UIPageViewController *)pageViewController
         didFinishAnimating:(BOOL)finished
    previousViewControllers:(NSArray *)previousViewControllers
@@ -167,6 +155,18 @@
 }
 
 #pragma mark - private methods
+
+- (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
+{
+//    NSLog(@"create image view for page index: %d", pageIndex);
+    BOOL hasPhoto = [self.dataSource photoExistAtIndex:pageIndex];
+    if (hasPhoto){
+        WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];
+        controller.view.tintColor = self.view.tintColor;
+        return controller;
+    }
+    return nil;
+}
 
 - (void)setCurrentPageToViewController:(WXImageViewController *)viewController
 {

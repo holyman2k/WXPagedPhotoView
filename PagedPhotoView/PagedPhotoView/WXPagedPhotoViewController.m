@@ -69,22 +69,22 @@
     if (controller) [self setCurrentPageToViewController:controller];
 }
 
-- (NSInteger)pageIndex
+- (NSUInteger)pageIndex
 {
     if (self.imageViewController) _pageIndex = self.imageViewController.pageIndex;
     return _pageIndex;
 }
 
 
-- (void)didLoadImage:(UIImage *)image atPageIndex:(NSUInteger)pageIndex;
+- (void)didLoadImage:(UIImage *)image forImageViewController:(WXImageViewController *)imageViewController
 {    
-    [self.imageViewController setImage:image forPageIndex:pageIndex];
-    [self.imageViewController setProgressViewHidden:YES atPageIndex:pageIndex];
+    imageViewController.image = image;
+    imageViewController.progressViewHidden = YES;
 }
 
-- (void)photoDownloadProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex
+- (void)setDownloadProgress:(CGFloat)progress forImageViewController:(WXImageViewController *)imageViewController;
 {
-    [self.imageViewController setProgress:progress atPageIndex:pageIndex];
+    imageViewController.progress = progress;
 }
 
 - (NSString *)viewTitle
@@ -158,7 +158,8 @@
 
 - (WXImageViewController *)viewControllerAtPageIndex:(NSUInteger)pageIndex
 {
-//    NSLog(@"create image view for page index: %d", pageIndex);
+//    if (pageIndex < 0) return nil;
+    NSLog(@"create image view for page index: %lu", (unsigned long)pageIndex);
     BOOL hasPhoto = [self.dataSource photoExistAtIndex:pageIndex];
     if (hasPhoto){
         WXImageViewController *controller = [WXImageViewController imageViewControllerForImage:nil andPageIndex:pageIndex];
@@ -178,12 +179,11 @@
 - (void)prepairToLoadImageForViewController:(WXImageViewController *)viewController
 {
     BOOL isLoading = YES;
-    UIImage *image = [self.dataSource pagedPhotoViewController:self imageAtIndex:viewController.pageIndex isLoading:&isLoading];
-    [viewController setImage:image forPageIndex:viewController.pageIndex];
+    [self.dataSource imageViewController:viewController imageAtIndex:viewController.pageIndex isLoading:&isLoading];
     if (!isLoading) {
-        [viewController setProgressViewHidden:YES atPageIndex:viewController.pageIndex];
+        viewController.progressViewHidden = YES;
     } else {
-        [viewController setProgressViewHidden:NO atPageIndex:viewController.pageIndex];
+        viewController.progressViewHidden = NO;
     }
 }
 

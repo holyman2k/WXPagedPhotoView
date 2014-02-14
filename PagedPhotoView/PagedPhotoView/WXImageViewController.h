@@ -16,11 +16,11 @@
 
 - (NSUInteger)pageIndex;
 
-- (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex;
+- (void)setImage:(UIImage *)image;
 
-- (void)setProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex;
+- (void)setProgress:(CGFloat)progress;
 
-- (void)setProgressViewHidden:(BOOL)hidden atPageIndex:(NSUInteger)pageIndex;
+- (void)setProgressViewHidden:(BOOL)hidden;
 
 - (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated;
 

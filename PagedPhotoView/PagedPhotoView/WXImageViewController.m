@@ -68,29 +68,22 @@
     return _pageIndex;
 }
 
-- (void)setImage:(UIImage *)image forPageIndex:(NSUInteger)pageIndex
+- (void)setImage:(UIImage *)image
 {
-//    NSLog(@"set image for page index %d, current page index %d", pageIndex, self.pageIndex);
-    if (self.pageIndex == pageIndex) {
-        self.imageScrollView.image = image;
-    }
+    self.imageScrollView.image = image;
 }
 
-- (void)setProgress:(CGFloat)progress atPageIndex:(NSUInteger)pageIndex
+- (void)setProgress:(CGFloat)progress
 {
-    if (self.pageIndex == pageIndex) {
-        self.progressView.progress = progress;
-    }
+    self.progressView.progress = progress;
 }
 
-- (void)setProgressViewHidden:(BOOL)hidden atPageIndex:(NSUInteger)pageIndex
+- (void)setProgressViewHidden:(BOOL)hidden
 {
-    if (self.pageIndex == pageIndex) {
-        if (self.progressView.hidden != hidden) {
-            self.progressView.hidden = hidden;
-        }
-        self.isLoading = !hidden;
+    if (self.progressView.hidden != hidden) {
+        self.progressView.hidden = hidden;
     }
+    self.isLoading = !hidden;
 }
 
 - (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated;

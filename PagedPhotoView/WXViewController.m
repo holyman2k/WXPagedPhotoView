@@ -53,10 +53,8 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     self.dataSource = self;
     self.delegate = self;
-    [self initalize];
 
     NSMutableArray *toolbarItems = self.toolbarItems.mutableCopy;
 
@@ -73,7 +71,18 @@
     [toolbarItems insertObject:fixWidthRight atIndex:2];
 
     self.toolbarItems = toolbarItems;
+    [super viewDidLoad];
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.isMovingToParentViewController) {
+        [self initalize];
+        [self setChromeHidden:NO animated:YES];
+    }
+    [super viewWillAppear:animated];
+}
+
 
 - (void)setAutoPlay:(UIBarButtonItem *)sender
 {
@@ -115,10 +124,10 @@
     return [self.images objectOrNilAtIndex:pageIndex] != nil;
 }
 
-- (UIImage *)pagedPhotoViewController:(WXPagedPhotoViewController *)pagedPhotoViewController imageAtIndex:(NSUInteger)pageIndex isLoading:(BOOL *)isLoading
+- (void)imageViewController:(WXImageViewController *)imageViewController imageAtIndex:(NSUInteger)pageIndex isLoading:(BOOL *)isLoading
 {
     WXPhoto *photo = [self.images objectOrNilAtIndex:pageIndex];
-    if (!photo) return nil;
+    if (!photo) return;
 
     if (![self.operations objectForKey:photo.photoUrl.absoluteString]) {
         *isLoading = YES;
@@ -126,29 +135,27 @@
         [self.operations setObject:operation forKey:photo.photoUrl.absoluteString];
         operation.responseSerializer = [AFImageResponseSerializer serializer];
 
-        __weak WXViewController *me = self;
         __weak NSMutableDictionary *operations = self.operations;
+        __weak UIImage *failedPhoto = self.downloadFailedPhoto;
 
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, UIImage *image) {
-            [me didLoadImage:image atPageIndex:pageIndex];
+            [self didLoadImage:image forImageViewController:imageViewController];
             [operations removeObjectForKey:photo.photoUrl.absoluteString];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [me didLoadImage:me.downloadFailedPhoto atPageIndex:pageIndex];
+            imageViewController.image = failedPhoto;
             [operations removeObjectForKey:photo.photoUrl.absoluteString];
         }];
 
         [operation setDownloadProgressBlock: ^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+            imageViewController.progressViewHidden = NO;
+            double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
+            [self setDownloadProgress:percent forImageViewController:imageViewController];
 
-            if (pageIndex == self.pageIndex) {
-                [self.imageViewController setProgressViewHidden:NO atPageIndex:pageIndex];
-                double percent = (double)totalBytesRead / (double)totalBytesExpectedToRead;
-                [me photoDownloadProgress:percent atPageIndex:pageIndex];
-            }
         }];
 
         [operation start];
     }
-    return nil;
+    return;
 }
 
 - (NSUInteger)numberOfPhoto

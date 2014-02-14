@@ -37,7 +37,6 @@
 
 - (void)didLoadImage:(UIImage *)image forImageViewController:(WXImageViewController *)imageViewController;
 - (void)setDownloadProgress:(CGFloat)progress forImageViewController:(WXImageViewController *)imageViewController;
-- (void)initalize;
 - (void)nextPhoto:(id)sender;
 - (void)previousPhoto:(id)sender;
 - (void)reloadPhoto;

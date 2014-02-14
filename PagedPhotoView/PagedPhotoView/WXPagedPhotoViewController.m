@@ -52,8 +52,9 @@
 
 #pragma mark - public methods
 
-- (void)initalize
+- (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                               navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
                                                                             options:@{UIPageViewControllerOptionInterPageSpacingKey : @20}];
@@ -67,6 +68,11 @@
 
     WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex];
     if (controller) [self setCurrentPageToViewController:controller];
+
+    if (self.isMovingToParentViewController) {
+        [self.navigationController setToolbarHidden:NO animated:NO];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+    }
 }
 
 - (NSUInteger)pageIndex

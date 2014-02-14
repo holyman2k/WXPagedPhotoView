@@ -63,10 +63,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (self.isMovingToParentViewController) {
-        [self.navigationController setToolbarHidden:NO animated:YES];
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-    }
+    [super viewWillAppear:animated];
+    _isChromeHidden = self.navigationController.navigationBar.alpha == 0;
 }
 
 #pragma mark - public methods
@@ -98,13 +96,19 @@
 {
     _isChromeHidden = hidden;
     if (!animated) {
-        self.navigationController.navigationBar.alpha = hidden ? 0 : 1;
-        self.navigationController.toolbar.alpha = hidden ? 0 : 1;
         [self setNeedsStatusBarAppearanceUpdate];
+        self.navigationController.navigationBar.alpha = hidden ? 0 : .9;
+        self.navigationController.toolbar.alpha = hidden ? 0 : .9;
     } else {
+        if (!hidden) {
+            [self setNeedsStatusBarAppearanceUpdate];
+            self.navigationController.navigationBar.alpha = 0;
+            self.navigationController.toolbar.alpha = 0;
+        }
         [UIView animateWithDuration:.25 animations:^(void) {
-            self.navigationController.navigationBar.alpha = hidden ? 0 : 1;
-            self.navigationController.toolbar.alpha = hidden ? 0 : 1;
+            [self setNeedsStatusBarAppearanceUpdate];
+            self.navigationController.navigationBar.alpha = hidden ? 0 : .9;
+            self.navigationController.toolbar.alpha = hidden ? 0 : .9;
             [self setNeedsStatusBarAppearanceUpdate];
         }];
     }
@@ -188,6 +192,6 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.navigationController.navigationBarHidden;
+    return self.isChromeHidden;
 }
 @end

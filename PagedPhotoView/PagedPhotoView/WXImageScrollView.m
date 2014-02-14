@@ -35,6 +35,8 @@
         _imageView.translatesAutoresizingMaskIntoConstraints = YES;
         _imageView.clipsToBounds = NO;
         _imageView.backgroundColor = [UIColor clearColor];
+        self.bounces = NO;
+        self.bouncesZoom = NO;
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:_imageView];
     }

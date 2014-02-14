@@ -37,6 +37,8 @@
         _imageView.backgroundColor = [UIColor clearColor];
         self.bounces = NO;
         self.bouncesZoom = NO;
+        self.showsHorizontalScrollIndicator = NO;
+        self.showsVerticalScrollIndicator = NO;
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:_imageView];
     }

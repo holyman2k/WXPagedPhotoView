@@ -60,10 +60,17 @@
         self.imageView.center = self.center;
         self.contentSize = self.imageView.frame.size;
         self.minimumZoomScale = self.zoomScale;
-        self.maximumZoomScale = MAX(self.imageView.image.size.width / self.imageView.bounds.size.width * 1.5, 1.5);
+        self.maximumZoomScale = [self maximumZoomScaleForSize:self.imageView.bounds.size];
     } else {
         self.imageView.center = self.center;
     }
 }
 
+- (CGFloat)maximumZoomScaleForSize:(CGSize)size;
+{
+    CGSize frameSize = self.bounds.size;
+
+    return MAX(frameSize.width / size.width, frameSize.height / size.height);
+
+}
 @end

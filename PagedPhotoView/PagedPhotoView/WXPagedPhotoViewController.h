@@ -42,5 +42,4 @@
 - (void)reloadPhoto;
 - (NSString *)viewTitle;
 - (void)setChromeHidden:(BOOL)hidden animated:(BOOL)animated;
-- (WXImageViewController *)imageViewController;
 @end

@@ -55,12 +55,13 @@
 
 - (void)fitImage
 {
-    if (self.imageView.image) {
-        [self.imageView fitToSize:self.bounds.size];
+    if (self.image) {
+        [self.imageView fitIntoSize:self.bounds.size];
         self.imageView.center = self.center;
-        self.contentSize = self.imageView.frame.size;
-        self.minimumZoomScale = self.zoomScale;
-        self.maximumZoomScale = [self maximumZoomScaleForSize:self.imageView.bounds.size];
+        self.contentSize = self.imageView.bounds.size;
+        self.maximumZoomScale = [self maximumZoomScaleForSize:self.imageView.frame.size];
+
+
     } else {
         self.imageView.center = self.center;
     }

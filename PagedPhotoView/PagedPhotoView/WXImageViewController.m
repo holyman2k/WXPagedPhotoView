@@ -53,7 +53,7 @@
 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
         _pageIndex = pageIndex;
-        WXImageScrollView *scrollView = [[WXImageScrollView alloc] initWithFrame:self.view.frame];
+        WXImageScrollView *scrollView = [[WXImageScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         scrollView.delegate = self;
         self.view = scrollView;
         [self setupGestures];

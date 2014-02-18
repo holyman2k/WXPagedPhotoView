@@ -55,21 +55,21 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                            options:@{UIPageViewControllerOptionInterPageSpacingKey : @20}];
-    self.pageViewController.delegate = self;
-    self.pageViewController.dataSource = self;
-    self.pageViewController.doubleSided = YES;
-    self.view.frame = self.pageViewController.view.frame;
-    [self addChildViewController:self.pageViewController];
-    [self.view addSubview:self.pageViewController.view];
-    self.title = self.viewTitle;
-
-    WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex];
-    if (controller) [self setCurrentPageToViewController:controller];
-
     if (self.isMovingToParentViewController) {
+        self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                                  navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                options:@{UIPageViewControllerOptionInterPageSpacingKey : @20}];
+        self.pageViewController.delegate = self;
+        self.pageViewController.dataSource = self;
+        self.pageViewController.doubleSided = YES;
+        self.view.frame = self.pageViewController.view.frame;
+        [self addChildViewController:self.pageViewController];
+        [self.view addSubview:self.pageViewController.view];
+        self.title = self.viewTitle;
+
+        WXImageViewController *controller = [self viewControllerAtPageIndex:self.pageIndex];
+        if (controller) [self setCurrentPageToViewController:controller];
+
         [self.navigationController setToolbarHidden:NO animated:NO];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
     }

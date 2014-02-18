@@ -14,6 +14,7 @@
 @property (nonatomic, readonly) NSUInteger pageIndex;
 @property (strong, nonatomic) DACircularProgressView *progressView;
 @property (nonatomic) BOOL isLoading;
+@property (strong, nonatomic, readonly) WXImageScrollView *imageScrollView;
 @end
 
 @implementation WXImageViewController
@@ -140,10 +141,11 @@
     if (self.isLoading) return;
 
     if (self.imageScrollView.zoomScale == 1) {
-        CGFloat scale = .25;
-        CGFloat width = self.imageScrollView.imageView.bounds.size.width;
-        CGFloat height = self.imageScrollView.imageView.bounds.size.height;
-        CGRect frame = CGRectMake(width * scale, height * scale, width - width * scale * 2, height - height * scale * 2);
+        CGRect bounds = self.view.bounds;
+        CGFloat scale = 1 / self.imageScrollView.maximumZoomScale;
+        CGFloat width = self.imageScrollView.imageView.bounds.size.width * scale;
+        CGFloat height = self.imageScrollView.imageView.bounds.size.height * scale;
+        CGRect frame = CGRectMake((bounds.size.width - width) / 2, (bounds.size.height - height) / 2, width, height);
         [self.imageScrollView zoomToRect:frame animated:YES];
     } else {
         [self.imageScrollView zoomToRect:self.view.frame animated:YES];

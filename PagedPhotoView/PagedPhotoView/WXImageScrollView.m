@@ -31,12 +31,11 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _imageView = [[UIImageView alloc] initWithFrame:frame];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         _imageView.translatesAutoresizingMaskIntoConstraints = YES;
-        _imageView.clipsToBounds = NO;
+        _imageView.clipsToBounds = YES;
         _imageView.backgroundColor = [UIColor clearColor];
         self.bounces = NO;
-        self.bouncesZoom = NO;
+        self.bouncesZoom = YES;
         self.showsHorizontalScrollIndicator = NO;
         self.showsVerticalScrollIndicator = NO;
         self.backgroundColor = [UIColor clearColor];
